@@ -9,12 +9,14 @@ import docsValidator from './utils/docsValidator';
 import initRouter from './routes';
 import config from './config';
 import controllers from './controllers';
+import initStore from './store';
 import logger from './utils/logger';
 import { verifyAuth, verifyCookieAuth } from './utils/auth';
 
 const app: Express = express();
 
 const serverApp = async () => {
+  const store = initStore({ config: config.redis });
   const validators = await docsValidator({ app, config: config.swagger });
   app.use(
     helmet({
@@ -37,7 +39,7 @@ const serverApp = async () => {
   app.use(
     '/api/v1',
     initRouter({
-      controller: controllers(),
+      controller: controllers({ store, config: config.game }),
       validators: {
         ...validators,
         verifyAuth,

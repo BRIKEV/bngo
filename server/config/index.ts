@@ -4,6 +4,14 @@ dotenv.config();
 
 const config = {
   env: process.env.NODE_ENV || 'local',
+  redis: {
+    URL: process.env.REDIS_URL || 'local',
+    expire: 20800,
+  },
+  game: {
+    userOptionsLength: 16,
+    boardLength: 49
+  },
   swagger: {
     info: {
       version: '1.0.0',

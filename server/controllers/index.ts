@@ -1,10 +1,10 @@
-import { Controllers } from './controllers.model';
-import role from './roles/roles';
+import { Controllers, Dependencies } from './controllers.model';
+import games from './games/games';
 
 
-const start = (): Controllers => {
+const start = (dependencies: Dependencies): Controllers => {
   return {
-    roles: role(),
+    games: games(dependencies),
   };
 };
 

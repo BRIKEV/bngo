@@ -1,8 +1,14 @@
-import { RoleController } from './roles/roles.model';
+import { Storage } from 'store/store.model';
+import { GameController } from './games/games.model';
 
 export interface Dependencies {
+  store: Storage;
+  config: {
+    userOptionsLength: number;
+    boardLength: number;
+  };
 }
 
 export interface Controllers {
-  roles: RoleController;
+  games: GameController;
 }
