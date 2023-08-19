@@ -1,3 +1,4 @@
+import http from 'http';
 import express, { Express } from 'express';
 import bodyParser from 'body-parser';
 import { join } from 'path';
@@ -18,7 +19,8 @@ const app: Express = express();
 const serverApp = async () => {
   const store = initStore({ config: config.redis });
   const controllers = initControllers({ store, config: config.game })
-  const socket = await initSocket({ config: config.socket, });
+  const server = http.createServer(app);
+  const socket = await initSocket({ config: config.socket, controllers, http: server });
   const validators = await docsValidator({ app, config: config.swagger });
   app.use(
     helmet({
@@ -50,6 +52,7 @@ const serverApp = async () => {
 
   return {
     app,
+    socket,
   };
 };
 
