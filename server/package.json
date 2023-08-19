@@ -1,0 +1,53 @@
+{
+  "name": "bngo-server",
+  "version": "1.0.0",
+  "description": "bngo server code",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc --build",
+    "start:db": "docker-compose --file docker/docker-compose.development.yml up -d --force-recreate",
+    "dev": "nodemon server.ts",
+    "test:dev": "cross-env DEBUG=error* jest --watch --runInBand --detectOpenHandles",
+    "init:db": "npm run start:db && npx prisma migrate dev",
+    "test:ci": "jest --runInBand --detectOpenHandles --forceExit"
+  },
+  "keywords": [
+    "express",
+    "bngo",
+    "redis",
+    "socket"
+  ],
+  "author": "brikev",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "compression": "^1.7.4",
+    "cookie-parser": "^1.4.6",
+    "cross-env": "^7.0.3",
+    "dotenv": "^16.0.3",
+    "error-handler-module": "^1.0.7",
+    "express": "^4.18.2",
+    "express-jsdoc-swagger": "^1.8.0",
+    "express-oas-validator": "^3.0.1",
+    "helmet": "^6.0.1",
+    "jsonwebtoken": "^9.0.0",
+    "redis": "^4.6.6",
+    "winston": "^3.8.2"
+  },
+  "devDependencies": {
+    "@types/compression": "^1.7.2",
+    "@types/cookie-parser": "^1.4.3",
+    "@types/express": "^4.17.17",
+    "@types/jest": "^29.5.0",
+    "@types/jsonwebtoken": "^9.0.1",
+    "@types/node": "^18.15.11",
+    "@types/supertest": "^2.0.12",
+    "jest": "^29.5.0",
+    "nock": "^13.3.0",
+    "nodemon": "^2.0.22",
+    "supertest": "^6.3.3",
+    "ts-jest": "^29.1.0",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.0.3"
+  }
+}

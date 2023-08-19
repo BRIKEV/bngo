@@ -1,0 +1,38 @@
+{
+  "name": "bngo-v2",
+  "version": "1.0.0",
+  "private": true,
+  "description": "bngo-app. Bngo with images",
+  "main": "index.js",
+  "workspaces": [
+    "server",
+    "client",
+    "packages/*"
+  ],
+  "scripts": {
+    "server:dev": "npm run dev -w server",
+    "client:dev": "npm run dev -w client",
+    "build:front": "npm run build -w client",
+    "build:server": "npm run build -w server",
+    "init:db": "npm run init:db -w server",
+    "test": "jest",
+    "test:server": "npm run test:ci -w server",
+    "start": "NODE_ENV=production node dist/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/BRIKEV/bngo-v2.git"
+  },
+  "keywords": [
+    "bngo",
+    "jest",
+    "react",
+    "supabase"
+  ],
+  "author": "Brikev",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BRIKEV/bngo-v2/issues"
+  },
+  "homepage": "https://github.com/BRIKEV/bngo-v2#readme"
+}
