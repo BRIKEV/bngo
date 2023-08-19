@@ -104,6 +104,7 @@ const start = ({ store, config }: Dependencies): GameController => {
     return Promise.resolve({
       username,
       gameReady,
+      board: updateGame.board,
       users: filteredUsers(newUsers),
     });
   };

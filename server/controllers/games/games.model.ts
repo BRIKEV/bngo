@@ -22,6 +22,7 @@ interface ReadyToStart {
 interface RemoveUser {
   username: string;
   gameReady: boolean;
+  board: Board[];
   users: Omit<User, "board">[];
 }
 

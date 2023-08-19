@@ -12,6 +12,12 @@ const config = {
     userOptionsLength: 16,
     boardLength: 49
   },
+  socket: {
+    interval: 14000,
+    endGameTimeout: 16000,
+    tokenSecret: process.env.JWT_SECRET || 'secreto',
+    tokenOptions: { expiresIn: '2h' },
+  },
   swagger: {
     info: {
       version: '1.0.0',

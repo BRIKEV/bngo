@@ -8,15 +8,17 @@ import cookieParser from 'cookie-parser';
 import docsValidator from './utils/docsValidator';
 import initRouter from './routes';
 import config from './config';
-import controllers from './controllers';
+import initControllers from './controllers';
+import initSocket from './socket';
 import initStore from './store';
 import logger from './utils/logger';
-import { verifyAuth, verifyCookieAuth } from './utils/auth';
 
 const app: Express = express();
 
 const serverApp = async () => {
   const store = initStore({ config: config.redis });
+  const controllers = initControllers({ store, config: config.game })
+  const socket = await initSocket({ config: config.socket, });
   const validators = await docsValidator({ app, config: config.swagger });
   app.use(
     helmet({
@@ -38,14 +40,7 @@ const serverApp = async () => {
   app.use(express.static(join(__dirname, '..', 'client', 'dist')));
   app.use(
     '/api/v1',
-    initRouter({
-      controller: controllers({ store, config: config.game }),
-      validators: {
-        ...validators,
-        verifyAuth,
-        verifyCookieAuth,
-      },
-    })
+    initRouter()
   );
   app.get('/*', (_req, res) => {
     res.sendFile(join(__dirname, '..', 'client', 'dist', 'index.html'));
