@@ -1,5 +1,5 @@
 import io, { Socket } from 'socket.io-client';
-import { Board, User } from '../models/game';
+import { BoardItem, User } from '../models/game';
 
 let socket: Socket;
 
@@ -12,9 +12,9 @@ interface Message {
   message: string;
   type: string;
   username: string;
-  board: Board[];
+  board: BoardItem[];
   ready: boolean;
-  optionSelected: Board;
+  optionSelected: BoardItem;
   title: string;
   users: User[];
   // TODO: remove this

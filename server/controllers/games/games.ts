@@ -2,7 +2,7 @@ import R from 'ramda';
 import logger from '../../utils/logger';
 import { GameController, CreateGame } from './games.model';
 import { Dependencies } from '../controllers.model';
-import { User, Board } from '../../models/game';
+import { User, BoardItem } from '../../models/game';
 import { notFoundError, badRequestError } from '../../utils/errorFactory';
 import shuffleBoard from '../../utils/shuffleBoard';
 import getRandomItem from '../../utils/getRandomItem';
@@ -60,7 +60,7 @@ const start = ({ store, config }: Dependencies): GameController => {
     if (isAlreadyAdded) {
       throw badRequestError('User already joined');
     }
-    const board = shuffleBoard<Board>(game.board, config.userOptionsLength);
+    const board = shuffleBoard<BoardItem>(game.board, config.userOptionsLength);
     let newUser = { username: trimUsername, board, ready: false, host: false };
     if (game.users.length === 0) {
       newUser = { ...newUser, host: true };
@@ -76,7 +76,7 @@ const start = ({ store, config }: Dependencies): GameController => {
     return Promise.resolve(newUser);
   };
 
-  const updateBoard = (board: Board[], optionSelected: Board) => (
+  const updateBoard = (board: BoardItem[], optionSelected: BoardItem) => (
     board.map(boardItem => {
       if (boardItem.id === optionSelected.id) {
         return { ...boardItem, selected: true };
@@ -136,7 +136,7 @@ const start = ({ store, config }: Dependencies): GameController => {
     });
   };
 
-  const isGameOver = (board: Board[]) => (
+  const isGameOver = (board: BoardItem[]) => (
     board.filter(({ selected }) => selected).length === config.boardLength
   );
 
@@ -147,7 +147,7 @@ const start = ({ store, config }: Dependencies): GameController => {
       throw error;
     }
     const validBoard = game.board.filter(({ selected }) => !selected);
-    const optionSelected = getRandomItem<Board>(validBoard);
+    const optionSelected = getRandomItem<BoardItem>(validBoard);
     const newBoard = updateBoard(game.board, optionSelected);
     const updateGame = {
       ...game,

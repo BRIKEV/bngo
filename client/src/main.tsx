@@ -4,6 +4,7 @@ import { ConfigProvider, theme } from 'antd';
 import { RouterProvider } from 'react-router-dom';
 import { theme as appTheme } from './styles/theme';
 import router from './routes';
+import './index.css';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>

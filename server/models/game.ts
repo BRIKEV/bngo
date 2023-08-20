@@ -4,10 +4,10 @@ export interface Game {
   name: string;
   ready: boolean;
   users: User[];
-  board: Board[];
+  board: BoardItem[];
 }
 
-export interface Board {
+export interface BoardItem {
   id: number;
   image: string;
   selected: boolean;
@@ -15,7 +15,7 @@ export interface Board {
 
 export interface User {
   username: string;
-  board: Board[];
+  board: BoardItem[];
   ready: boolean;
   host: boolean;
 }

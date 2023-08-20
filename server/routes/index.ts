@@ -1,11 +1,10 @@
 import express from 'express';
-
+import initGames from './v1/games';
+import { Dependencies } from './routes.model';
 const router = express.Router();
 
-const initRouter = () => {
-  router.use('/your-route', (req, res) => {
-    res.json({ success: true });
-  });
+const initRouter = ({ controllers, validators, config }: Dependencies) => {
+  router.use('/games', initGames({ controllers, validators, config }));
 
   return router;
 };

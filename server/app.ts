@@ -42,7 +42,7 @@ const serverApp = async () => {
   app.use(express.static(join(__dirname, '..', 'client', 'dist')));
   app.use(
     '/api/v1',
-    initRouter()
+    initRouter({ validators, controllers: controllers, config: config.routes })
   );
   app.get('/*', (_req, res) => {
     res.sendFile(join(__dirname, '..', 'client', 'dist', 'index.html'));

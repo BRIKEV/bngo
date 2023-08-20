@@ -1,4 +1,4 @@
-import { Board, Game, User } from "../../models/game";
+import { BoardItem, Game, User } from "../../models/game";
 
 export interface CreateGame {
   gameName: string;
@@ -7,7 +7,7 @@ export interface CreateGame {
 }
 
 interface Turn {
-  optionSelected: Board;
+  optionSelected: BoardItem;
   updateGame: Game;
   gameFinished: boolean;
 }
@@ -15,23 +15,23 @@ interface Turn {
 interface ReadyToStart {
   username: string;
   gameReady: boolean;
-  board: Board[];
+  board: BoardItem[];
   users: Omit<User, "board">[];
 }
 
 interface RemoveUser {
   username: string;
   gameReady: boolean;
-  board: Board[];
+  board: BoardItem[];
   users: Omit<User, "board">[];
 }
 
 interface UserGameInfo {
-  mainBoard: Board[];
+  mainBoard: BoardItem[];
   users: Omit<User, "board">[];
   gameReady: boolean;
   username: string;
-  board: Board[];
+  board: BoardItem[];
   ready: boolean;
   host: boolean;
 }
