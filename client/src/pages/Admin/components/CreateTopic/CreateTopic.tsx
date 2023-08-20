@@ -8,10 +8,7 @@ import {
   Upload,
   Space,
 } from 'antd';
-
-const onFinish = (values: any) => {
-  console.log('Received values of form: ', values);
-};
+import { createTopic } from '../../../../api';
 
 const normFile = (e: UploadChangeParam) => {
   console.log('Upload event:', e);
@@ -21,47 +18,59 @@ const normFile = (e: UploadChangeParam) => {
   return e?.fileList;
 };
 
-const CreateTopic: React.FC = () => (
-  <Form
-    name="create_topic"
-    onFinish={onFinish}
-  >
-    <Form.Item
-      label="topicName"
-      name="topicName"
-      rules={[{ required: true, message: 'Please input your game!' }]}
-    >
-      <Input />
-    </Form.Item>
+interface FormValues {
+  topicName: string;
+  topicImages: File[];
+}
 
-    <Form.Item
-      name="upload"
-      label="Upload"
-      valuePropName="fileList"
-      getValueFromEvent={normFile}
+const CreateTopic: React.FC = () => {
+  const onFinish = async (values: FormValues) => {
+    await createTopic(values.topicName, values.topicImages);
+    console.log('Received values of form: ', values);
+  };
+
+  return (
+    <Form
+      name="create_topic"
+      onFinish={onFinish}
     >
-      <Upload
-        multiple
-        name="logo"
-        listType="picture"
-        onChange={() => 0}
-        beforeUpload={() => {
-          return false;
-        }}
+      <Form.Item
+        label="topicName"
+        name="topicName"
+        rules={[{ required: true, message: 'Please input your game!' }]}
       >
-        <Button icon={<UploadOutlined />}>Click to upload</Button>
-      </Upload>
-    </Form.Item>
+        <Input />
+      </Form.Item>
 
-    <Form.Item>
-      <Space>
-        <Button type="primary" htmlType="submit">
-          Submit
-        </Button>
-        <Button htmlType="reset">reset</Button>
-      </Space>
-    </Form.Item>
-  </Form>
-);
+      <Form.Item
+        name="topicImages"
+        label="Añadir nuevas imágenes"
+        valuePropName="fileList"
+        getValueFromEvent={normFile}
+      >
+        <Upload
+          multiple
+          name="logo"
+          listType="picture"
+          onChange={() => 0}
+          beforeUpload={() => {
+            return false;
+          }}
+        >
+          <Button icon={<UploadOutlined />}>Subir</Button>
+        </Upload>
+      </Form.Item>
+
+      <Form.Item>
+        <Space>
+          <Button type="primary" htmlType="submit">
+            Submit
+          </Button>
+          <Button htmlType="reset">reset</Button>
+        </Space>
+      </Form.Item>
+    </Form>
+  );
+};
 
 export default CreateTopic;
