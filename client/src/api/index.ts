@@ -31,13 +31,14 @@ const saveImage = async (topicId: number, image: File, path: string) => {
 
 export const createTopic = async (topicName: string, images: File[]) => {
   try {
+    const userResponse = await supabase.auth.getUser();
+    const userId = userResponse.data.user?.id;
     const newTopicResponse = await supabase.from('topics').insert({
       name: topicName,
+      user_id: userId,
     }).select().single();
-    const userResponse = await supabase.auth.getUser();
-    const savedTopicId = newTopicResponse.data.topic.id;
-    const savedTopicName = newTopicResponse.data.topic.name;
-    const userId = userResponse.data.user?.id;
+    const savedTopicId = newTopicResponse.data.id;
+    const savedTopicName = newTopicResponse.data.name;
     for (const image of images) {
       await saveImage(savedTopicId, image, `${userId}/${savedTopicName}`);
     }
