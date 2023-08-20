@@ -1,5 +1,8 @@
 import React from 'react';
 import { Button, Form, Input } from 'antd';
+import { joinGame } from '../../../../api';
+import { setAccess } from '../../../../persistence/access';
+import { useNavigate } from 'react-router-dom';
 
 type FieldType = {
   gameName: string;
@@ -8,8 +11,12 @@ type FieldType = {
 };
 
 const JoinGame: React.FC = () => {
-  const onFinish = (values: FieldType) => {
-    console.log('Success:', values);
+  const navigate = useNavigate();
+
+  const onFinish = async (values: FieldType) => {
+    const response = await joinGame(values.password, values.username, values.gameName);
+    setAccess(response.data.accessKey);
+    navigate('/dashboard');
   };
 
   return (
