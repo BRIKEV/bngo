@@ -1,26 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { ConfigProvider, theme } from 'antd';
-import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-import Login from './pages/Login/Login';
-import Homepage from './pages/Home/Home';
+import { RouterProvider } from 'react-router-dom';
 import { theme as appTheme } from './styles/theme';
-import RouteValidation from './Layout/RouteValidation';
-
-const router = createBrowserRouter([
-  {
-    path: '/admin',
-    element: (
-      <RouteValidation>
-        <Homepage />
-      </RouteValidation>
-    ),
-  },
-  {
-    path: '/login',
-    element: <Login />,
-  },
-]);
+import router from './routes';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>

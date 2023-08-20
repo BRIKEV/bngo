@@ -1,28 +1,15 @@
-import { useEffect } from "react";
-import { supabase } from "../../supabase/client";
+import { Card, Typography } from "antd";
+const { Title } = Typography;
 
 const Homepage = () => {
-  useEffect(() => {
-    supabase
-      .from('courses')
-      .select('*')
-      .then(({ data: users, error }) => {
-        console.log(error);
-        console.log('courses', users);
-      })
-    supabase
-      .from('user_2_course')
-      .select('course_id, user_id, users(*), courses(*)')
-      .then(({ data: courses, error }) => {
-        console.log(error);
-        console.log('user_2_course', courses);
-      })
-  }, []);
   return (
-    <div>
-      Hola
-      <button onClick={() => supabase.auth.signOut()}>Logout</button>
-    </div>
+    <Typography>
+      <Title>Bngo App</Title>
+      <Title level={2}>Bngo app is a fun application to play picture bingo with your friends</Title>
+      <Card>
+        
+      </Card>
+    </Typography>
   );
 };
 
