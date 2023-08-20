@@ -14,7 +14,7 @@ const RouteValidation = ({ children }: Props) => {
       if (!session) {
         navigate('/login');
       } else {
-        navigate('/');
+        navigate('/admin');
       }
       
     });

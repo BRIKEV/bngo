@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from "react-router-dom";
 import { Button, Form, Input } from 'antd';
 import { joinGame } from '../../../../api';
 import { setAccess } from '../../../../persistence/access';
@@ -51,10 +52,17 @@ const JoinGame: React.FC = () => {
         <Input />
       </Form.Item>
   
-      <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-        <Button type="primary" htmlType="submit">
-          Acceder
+      <Form.Item>
+        <Button type="primary" htmlType="submit" block>
+          Acceder a partida
         </Button>
+      </Form.Item>
+      <Form.Item>
+        <Link to="/admin">
+          <Button type="default" htmlType="button" block>
+            Crear una partida
+          </Button>
+        </Link>
       </Form.Item>
     </Form>
   );
