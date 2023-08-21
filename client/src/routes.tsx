@@ -3,6 +3,7 @@ import Game from './pages/Game/Game';
 import Homepage from './pages/Home/Home';
 import RouteValidation from './Layout/RouteValidation';
 import Admin from './pages/Admin/Admin';
+import TopicDetail from './pages/TopicDetail/TopicDetail';
 
 const router = createBrowserRouter([
   {
@@ -16,6 +17,14 @@ const router = createBrowserRouter([
     element: (
       <RouteValidation>
         <Admin />
+      </RouteValidation>
+    ),
+  },
+  {
+    path: '/admin/topics/:id',
+    element: (
+      <RouteValidation>
+        <TopicDetail />
       </RouteValidation>
     ),
   },

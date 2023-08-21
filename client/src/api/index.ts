@@ -47,6 +47,33 @@ export const createTopic = async (topicName: string, images: File[]) => {
   }
 };
 
+export const getTopic = async (topicId: number) => {
+  try {
+    const { data: topicResponse } = await supabase.from('topics')
+      .select('*, images(*)')
+      .eq('id', topicId)
+      .single();
+      const URLS = topicResponse.images.map(image => image.url);
+      const { data: tmpUrls } = await supabase
+        .storage
+        .from('topics')
+        .createSignedUrls(URLS, 60);
+      const topic = {
+        ...topicResponse,
+        images: topicResponse.images.map((image, index: number) => {
+          return {
+            uid: image.id.toString(),
+            name: image.name,
+            url: tmpUrls[index].signedUrl,
+          };
+        })
+      };
+    return topic;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const getTopics = async () => {
   try {
     const topicsResponse = await supabase.from('topics').select('*, images(*)');
