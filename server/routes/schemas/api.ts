@@ -1,4 +1,12 @@
 /**
+ * Create game request
+ * @typedef {object} CreateGameRequest
+ * @property {string} gameKey.required - game key
+ * @property {string} gameName.required - game name
+ * @property {number[]} topics.required - topics
+ */
+
+/**
  * Join game request payload
  * @typedef {object} JoinGameRequest
  * @property {string} gameKey.required - game key

@@ -9,13 +9,14 @@ import {
   Space,
 } from 'antd';
 import gamesStore from '../../../../store/topics';
+import { createGame } from '../../../../api';
 
-const onFinish = (values: any) => {
-  console.log('Received values of form: ', values);
-};
 
 const CreateGame: React.FC = () => {
   const topicList = gamesStore((state) => state.topics);
+  const onFinish = async (values: any) => {
+    await createGame(values.password, values.gameName, values.topics);
+  };
   return (
     <Form
       name="validate_other"
@@ -37,15 +38,7 @@ const CreateGame: React.FC = () => {
         <Input.Password />
       </Form.Item>
   
-      <Form.Item
-        label="username"
-        name="username"
-        rules={[{ required: true, message: 'Please input your username!' }]}
-      >
-        <Input />
-      </Form.Item>
-  
-      <Form.Item name="checkbox-group" label="Elige cateogria">
+      <Form.Item name="topics" label="Elige cateogria">
         <Checkbox.Group>
           <Row>
             {topicList.map(topic => (

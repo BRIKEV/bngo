@@ -6,6 +6,7 @@ import { User, BoardItem } from '../../models/game';
 import { notFoundError, badRequestError } from '../../utils/errorFactory';
 import shuffleBoard from '../../utils/shuffleBoard';
 import getRandomItem from '../../utils/getRandomItem';
+import { supabase } from '../../supabase/client';
 
 const start = ({ store, config }: Dependencies): GameController => {
   const trimText = (text: string) => {
@@ -19,18 +20,30 @@ const start = ({ store, config }: Dependencies): GameController => {
 
   const createGame = async ({ gameName, gameKey, topics }: CreateGame) => {
     const gameExists = await store.getGameByKey(gameKey);
-    if (gameExists) {
+    if (gameExists && gameExists.key === gameKey) {
       throw badRequestError('This game was already created');
     }
-    logger.info('Creating game');
-    const game = {
-      key: trimText(gameKey),
-      name: trimText(gameName),
-      ready: false,
-      users: [],
-      board: [],
-    };
-    await store.addGame(game);
+    const response: any = await supabase.from('topics')
+      .select('*, images(*)')
+      .in('id', topics);
+    const user = await supabase.auth.getUser();
+    console.log(response, user);
+    // const board = topicsInfo.map((topicInfo: any) => {
+    //   return topicInfo.images.map((image: any) => ({
+    //     id: image.id,
+    //     image: image.url,
+    //     selected: false,
+    //   }));
+    // }).flat();
+    // logger.info('Creating game');
+    // const game = {
+    //   key: trimText(gameKey),
+    //   name: trimText(gameName),
+    //   ready: false,
+    //   users: [],
+    //   board: shuffleBoard<BoardItem>(board, config.boardLength),
+    // };
+    // await store.addGame(game);
     return Promise.resolve();
   };
 

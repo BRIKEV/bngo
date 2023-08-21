@@ -8,9 +8,13 @@ const config = {
     URL: process.env.REDIS_URL || 'local',
     expire: 20800,
   },
+  supabase: {
+    anonKey: process.env.SUPABASE_ANON_KEY || 'SUPABASE_ANON_KEY',
+    host: process.env.SUPABASE_HOST || 'SUPABASE_HOST',
+  },
   game: {
     userOptionsLength: 16,
-    boardLength: 49
+    boardLength: 36,
   },
   routes: {
     tokenSecret: process.env.JWT_SECRET || 'secreto',
@@ -25,7 +29,7 @@ const config = {
   swagger: {
     info: {
       version: '1.0.0',
-      title: 'Foodai API',
+      title: 'Bngo API',
       license: {
         name: 'MIT',
       },

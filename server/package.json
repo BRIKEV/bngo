@@ -5,10 +5,9 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc --build",
-    "start:db": "docker-compose --file docker/docker-compose.development.yml up -d --force-recreate",
     "dev": "nodemon server.ts",
     "test:dev": "cross-env DEBUG=error* jest --watch --runInBand --detectOpenHandles",
-    "init:db": "npm run start:db && npx prisma migrate dev",
+    "init:db": "docker-compose --file docker/docker-compose.yml up -d --force-recreate",
     "test:ci": "jest --runInBand --detectOpenHandles --forceExit"
   },
   "keywords": [
@@ -20,6 +19,7 @@
   "author": "brikev",
   "license": "ISC",
   "dependencies": {
+    "@supabase/supabase-js": "^2.32.0",
     "body-parser": "^1.20.2",
     "compression": "^1.7.4",
     "cookie-parser": "^1.4.6",
