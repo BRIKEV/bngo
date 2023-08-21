@@ -46,3 +46,12 @@ export const createTopic = async (topicName: string, images: File[]) => {
     console.log(error);
   }
 };
+
+export const getTopics = async () => {
+  try {
+    const topicsResponse = await supabase.from('topics').select('*, images(*)');
+    return topicsResponse.data;
+  } catch (error) {
+    console.log(error);
+  }
+};

@@ -26,7 +26,6 @@ interface FormValues {
 const CreateTopic: React.FC = () => {
   const onFinish = async (values: FormValues) => {
     await createTopic(values.topicName, values.topicImages);
-    console.log('Received values of form: ', values);
   };
 
   return (
