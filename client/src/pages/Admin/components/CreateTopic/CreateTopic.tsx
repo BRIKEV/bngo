@@ -1,6 +1,6 @@
 import React from 'react';
 import { UploadOutlined } from '@ant-design/icons';
-import type { UploadChangeParam } from "antd/es/upload/interface";
+import type { RcFile, UploadChangeParam, UploadFile } from "antd/es/upload/interface";
 import {
   Button,
   Form,
@@ -20,12 +20,15 @@ const normFile = (e: UploadChangeParam) => {
 
 interface FormValues {
   topicName: string;
-  topicImages: File[];
+  topicImages: UploadFile[];
 }
 
 const CreateTopic: React.FC = () => {
   const onFinish = async (values: FormValues) => {
-    await createTopic(values.topicName, values.topicImages);
+    await createTopic(
+      values.topicName,
+      values.topicImages.map(image => image.originFileObj as RcFile)
+      );
   };
 
   return (

@@ -35,6 +35,7 @@ const Images: React.FC<Props> = ({ images }) => {
     if (!file.url && !file.preview) {
       file.preview = await getBase64(file.originFileObj as RcFile);
     }
+    console.log(file);
     setPreviewImage(file.url || (file.preview as string));
     setPreviewOpen(true);
     setPreviewTitle(file.name || file.url!.substring(file.url!.lastIndexOf('/') + 1));
@@ -43,6 +44,7 @@ const Images: React.FC<Props> = ({ images }) => {
   const handleChange: UploadProps['onChange'] = ({ fileList: newFileList }) =>{
     if (newFileList.length > fileList.length) {
       // TODO: upload file
+      // addNewImage();
     } else if (newFileList.length < fileList.length) {
       // TODO: remove file
     }
@@ -60,12 +62,10 @@ const Images: React.FC<Props> = ({ images }) => {
           return false;
         }}
       >
-        {fileList.length >= 8 ? null : (
-          <div>
-            <PlusOutlined />
-            <div style={{ marginTop: 8 }}>Upload</div>
-          </div>
-        )}
+        <div>
+          <PlusOutlined />
+          <div style={{ marginTop: 8 }}>Upload</div>
+        </div>
       </Upload>
       <Modal open={previewOpen} title={previewTitle} footer={null} onCancel={handleCancel}>
         <img alt="example" style={{ width: '100%' }} src={previewImage} />

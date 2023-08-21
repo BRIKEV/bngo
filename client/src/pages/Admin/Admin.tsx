@@ -1,17 +1,16 @@
-import { useEffect } from "react";
 import { Button, Typography } from "antd";
 import { supabase } from "../../supabase/client";
 import CreateGame from "./components/CreateGame/CreateGame";
 import CreateTopic from "./components/CreateTopic/CreateTopic";
 import ListTopics from "./components/ListTopics/ListTopics";
+import { useEffect } from "react";
+import gamesStore from "../../store/topics";
 
 const Admin = () => {
+  const findAllTopics = gamesStore((state) => state.findAllTopics);
   useEffect(() => {
-    supabase.auth.getUser()
-      .then(user => {
-        console.log(user);
-      });
-  }, []);
+    findAllTopics();
+  }, [findAllTopics]);
   return (
     <div>
       <Typography.Title>Crear juego</Typography.Title>

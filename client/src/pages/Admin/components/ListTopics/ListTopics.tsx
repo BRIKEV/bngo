@@ -1,18 +1,10 @@
-import { useEffect, useState } from "react";
 import { Button, Typography } from "antd";
 import { FileImageOutlined } from '@ant-design/icons';
-import { getTopics } from "../../../../api";
 import { Link } from "react-router-dom";
+import gamesStore from "../../../../store/topics";
 
 const ListTopics = () => {
-  const [topicList, setTopics] = useState<any[]>([]);
-  useEffect(() => {
-    getTopics()
-      .then(async (topics: any[]) => {
-        console.log(topics);
-        setTopics(topics);
-      });
-  }, []);
+  const topicList = gamesStore((state) => state.topics);
   return (
     <div>
       {topicList.map(topic => (

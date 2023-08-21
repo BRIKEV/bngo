@@ -17,16 +17,32 @@ export const createGame = (gameKey: string, gameName: string, topics: number[]) 
   })
 );
 
-const saveImage = async (topicId: number, image: File, path: string) => {
-  const { data, error } = await supabase.storage.from('topics').upload(
-    `${path}/${image.name}`,
+export const saveImage = async (topicId: number, image: File, userId: string) => {
+  const imagePath = `${userId}/${topicId}/${image.name}`;
+  console.log(image);
+  const { data: imageUploaded } = await supabase.storage.from('topics').upload(
+    imagePath,
     image,
+    {
+      contentType: image.type,
+      upsert: false,
+    },
   );
-  const newTopicResponse = await supabase.from('images').insert({
-    url: data?.path,
+  const { data } = await supabase
+    .storage
+    .from('topics')
+    .list(`${userId}/${topicId}`, {
+      limit: 1,
+      offset: 0,
+      sortBy: { column: 'name', order: 'asc' },
+    })
+  if (!data) throw Error('Uploading images');
+  const storageId = data[0].id;
+  await supabase.from('images').insert({
+    url: imageUploaded?.path,
     topic_id: topicId,
+    storage_id: storageId,
   }).select().single();
-  console.log(data, error, newTopicResponse);
 };
 
 export const createTopic = async (topicName: string, images: File[]) => {
@@ -38,9 +54,8 @@ export const createTopic = async (topicName: string, images: File[]) => {
       user_id: userId,
     }).select().single();
     const savedTopicId = newTopicResponse.data.id;
-    const savedTopicName = newTopicResponse.data.name;
     for (const image of images) {
-      await saveImage(savedTopicId, image, `${userId}/${savedTopicName}`);
+      await saveImage(savedTopicId, image, userId as string);
     }
   } catch (error) {
     console.log(error);
@@ -61,10 +76,11 @@ export const getTopic = async (topicId: number) => {
       const topic = {
         ...topicResponse,
         images: topicResponse.images.map((image, index: number) => {
+          const name = image.url.split('/').at(-1);
           return {
             uid: image.id.toString(),
-            name: image.name,
             url: tmpUrls[index].signedUrl,
+            name,
           };
         })
       };
