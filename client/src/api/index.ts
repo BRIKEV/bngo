@@ -43,7 +43,7 @@ export const saveImage = async (topicId: number, image: File, userId: string) =>
   if (!data) throw Error('Uploading images');
   const storageId = data[0].id;
   await supabase.from('images').insert({
-    url: imageUploaded?.path,
+    url: imageUploaded?.path as string,
     topic_id: topicId,
     storage_id: storageId,
   }).select().single();
@@ -53,10 +53,12 @@ export const createTopic = async (topicName: string, images: File[]) => {
   try {
     const userResponse = await supabase.auth.getUser();
     const userId = userResponse.data.user?.id;
+    if (!userId) throw Error('User must be authenticated');
     const newTopicResponse = await supabase.from('topics').insert({
       name: topicName,
       user_id: userId,
     }).select().single();
+    if (!newTopicResponse.data) throw Error('Error creating topic');
     const savedTopicId = newTopicResponse.data.id;
     for (const image of images) {
       await saveImage(savedTopicId, image, userId as string);
@@ -72,22 +74,24 @@ export const getTopic = async (topicId: number) => {
       .select('*, images(*)')
       .eq('id', topicId)
       .single();
-      const URLS = topicResponse.images.map(image => image.url);
-      const { data: tmpUrls } = await supabase
-        .storage
-        .from('topics')
-        .createSignedUrls(URLS, 60);
-      const topic = {
-        ...topicResponse,
-        images: topicResponse.images.map((image, index: number) => {
-          const name = image.url.split('/').at(-1);
-          return {
-            uid: image.id.toString(),
-            url: tmpUrls[index].signedUrl,
-            name,
-          };
-        })
-      };
+    if (!topicResponse) throw Error('Error creating topic');
+    const URLS = topicResponse.images.map(image => image.url);
+    const { data: tmpUrls } = await supabase
+      .storage
+      .from('topics')
+      .createSignedUrls(URLS, 60);
+    if (!tmpUrls) throw Error('Error creating signed urls');
+    const topic = {
+      ...topicResponse,
+      images: topicResponse.images.map((image, index: number) => {
+        const name = image.url.split('/').at(-1);
+        return {
+          uid: image.id.toString(),
+          url: tmpUrls[index].signedUrl,
+          name,
+        };
+      })
+    };
     return topic;
   } catch (error) {
     console.log(error);
@@ -97,6 +101,7 @@ export const getTopic = async (topicId: number) => {
 export const getTopics = async () => {
   try {
     const topicsResponse = await supabase.from('topics').select('*, images(*)');
+    if (!topicsResponse.data) throw Error('Error geting topics');
     return topicsResponse.data;
   } catch (error) {
     console.log(error);

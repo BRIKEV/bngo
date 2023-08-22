@@ -8,13 +8,18 @@ interface Options {
   delay: number;
 }
 
+interface Selected {
+  image: string;
+  name: string;
+}
+
 interface Message {
   message: string;
   type: string;
   username: string;
   board: BoardItem[];
   ready: boolean;
-  optionSelected: BoardItem;
+  optionSelected: Selected;
   title: string;
   users: User[];
   // TODO: remove this
@@ -23,15 +28,15 @@ interface Message {
 
 interface Methods {
   errorAccess: ({ message, type }: Pick<Message, 'message' | 'type'>) => void;
-  yourBoard: ({ username, board }: Pick<Message, 'username' | 'board'>) => void;
-  board: ({ board }: Pick<Message, 'board'>) => void;
-  userReady: ({ username, ready, host }: Pick<Message, 'username' | 'ready' | 'host'>) => void;
+  yourBoard: (username: string, board: BoardItem[]) => void;
+  board: (board: BoardItem[]) => void;
+  userReady: (username: string, ready: boolean, host?: boolean) => void;
   gameReady: () => void;
-  optionSelected: ({ optionSelected, board }: Pick<Message, 'optionSelected' | 'board'>) => void;
+  optionSelected: (optionSelected: Selected, board: BoardItem[]) => void;
   callbackAfterSelected: () => void;
   incorrectBingo: ({ username }: Pick<Message, 'username'>) => void;
   usernameHasBingo: ({ username }: Pick<Message, 'username'>) => void;
-  usersList: ({ users }: Pick<Message, 'users'>) => void;
+  usersList: (users: User[]) => void;
   userLeaves: ({ username }: Pick<Message, 'username'>) => void;
   userMessage: ({ title, message }: Pick<Message, 'title' | 'message'>) => void;
   readyToPlayAgain: () => void;
@@ -51,19 +56,19 @@ const IOeventEmitter = (methods: Methods, options: Options) => {
   });
 
   socket.on('newUser', ({ username, ready, host }) => {
-    methods.userReady({ username, ready, host });
+    methods.userReady(username, ready, host);
   });
 
   socket.on('yourBoard', ({ username, board }) => {
-    methods.yourBoard({ username, board });
+    methods.yourBoard(username, board);
   });
 
   socket.on('board', ({ board }) => {
-    methods.board({ board });
+    methods.board(board);
   });
 
   socket.on('userReady', ({ username, ready }) => {
-    methods.userReady({ username, ready });
+    methods.userReady(username, ready);
   });
 
   socket.on('gameReady', () => {
@@ -72,7 +77,7 @@ const IOeventEmitter = (methods: Methods, options: Options) => {
   });
 
   socket.on('optionSelected', ({ optionSelected, board }) => {
-    methods.optionSelected({ optionSelected, board });
+    methods.optionSelected(optionSelected, board);
     setTimeout(() => {
       methods.callbackAfterSelected();
     }, options.delay);
@@ -87,7 +92,7 @@ const IOeventEmitter = (methods: Methods, options: Options) => {
   });
 
   socket.on('usersList', ({ users }) => {
-    methods.usersList({ users });
+    methods.usersList(users);
   });
 
   socket.on('userLeaves', ({ username }) => {
