@@ -1,6 +1,10 @@
 import { useEffect } from "react";
 import io from "../../io";
 import gamesStore from "./store/game";
+import { getInfo } from "../../persistence/access";
+import UserBoard from "./components/UserBoard/UserBoard";
+import MainBoard from "./components/MainBoard/MainBoard";
+import DrawPick from "./components/DrawPick/DrawPick";
 
 const Game = () => {
   const methods = gamesStore((state) => ({
@@ -37,14 +41,16 @@ const Game = () => {
       },
     },
     {
-      accessKey: '???',
+      ...getInfo(),
       delay: 6000,
     });
   }, [methods]);
 
   return (
     <div>
-      <h1>Game</h1>
+      <MainBoard />
+      <DrawPick />
+      <UserBoard />
     </div>
   );
 };

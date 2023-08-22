@@ -3,6 +3,7 @@ import express, { Express } from 'express';
 import bodyParser from 'body-parser';
 import { join } from 'path';
 import helmet from 'helmet';
+import cors from 'cors';
 import compression from 'compression';
 import { handleHttpError } from 'error-handler-module';
 import cookieParser from 'cookie-parser';
@@ -21,15 +22,16 @@ const serverApp = async () => {
   const controllers = initControllers({ store, config: config.game })
   const server = http.createServer(app);
   const socket = await initSocket({ config: config.socket, controllers, http: server });
+  app.use(cors())
   const validators = await docsValidator({ app, config: config.swagger });
-  app.use(
-    helmet({
-      contentSecurityPolicy: false,
-      crossOriginOpenerPolicy: false,
-      crossOriginResourcePolicy: false,
-      crossOriginEmbedderPolicy: false,
-    })
-  );
+  // app.use(
+  //   helmet({
+  //     contentSecurityPolicy: false,
+  //     crossOriginOpenerPolicy: false,
+  //     crossOriginResourcePolicy: false,
+  //     crossOriginEmbedderPolicy: false,
+  //   })
+  // );
   app.use(cookieParser());
   app.use(compression());
   // Enable the use of request body parsing middleware

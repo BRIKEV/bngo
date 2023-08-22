@@ -23,7 +23,12 @@ interface UserInfo {
 
 const start = async ({ http, controllers, config }: Dependencies) => {
   const { verifyToken } = jwt(config.tokenSecret, config.tokenOptions);
-  const io = new Server(http);
+  const io = new Server(http, {
+    cors: {
+      origin: "http://localhost:5173",
+      methods: ["GET", "POST"]
+    }
+  });
   logger.info('create io instance');
 
   const draw = (socket: Server, room: string, gameKey: string, endGame: () => void) => async () => {
@@ -41,7 +46,12 @@ const start = async ({ http, controllers, config }: Dependencies) => {
 
   const intervals: { [key: string]: NodeJS.Timer | undefined } = {};
 
+  io.on("connect_error", (err) => {
+    console.log(`connect_error due to ${err.message}`);
+  });
+
   io.on('connection', socket => {
+    console.log('Connect');
     // socket.emit('userConnected', { userId: socket.id });
     let intervalIdentifier: string;
     let username: string;

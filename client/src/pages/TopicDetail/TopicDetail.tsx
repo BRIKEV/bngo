@@ -10,7 +10,7 @@ const TopicDetail = () => {
   const [topic, setTopic] = useState<any | null>(null);
   useEffect(() => {
     getTopic(+(id as string))
-      .then(async (topicResponse: any[]) => {
+      .then(async (topicResponse) => {
         console.log(topicResponse);
         setTopic(topicResponse);
       });

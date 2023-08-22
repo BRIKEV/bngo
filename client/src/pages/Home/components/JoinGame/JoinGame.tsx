@@ -17,7 +17,7 @@ const JoinGame: React.FC = () => {
   const onFinish = async (values: FieldType) => {
     const response = await joinGame(values.password, values.username, values.gameName);
     setAccess(response.data.accessKey);
-    navigate('/dashboard');
+    navigate('/game');
   };
 
   return (

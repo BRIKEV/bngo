@@ -44,7 +44,7 @@ interface Methods {
 
 const IOeventEmitter = (methods: Methods, options: Options) => {
   if (!socket) {
-    socket = io('/', {
+    socket = io('http://localhost:4000/', {
       query: {
         accessKey: options.accessKey,
       },
@@ -108,7 +108,7 @@ const IOeventEmitter = (methods: Methods, options: Options) => {
   });
 };
 
-export const emit = (message: string, payload: keyof Message) => socket.emit(message, payload);
+export const emit = (message: string, payload?: keyof Message) => socket.emit(message, payload);
 export const disconnect = () => socket.close();
 
 export default IOeventEmitter;
