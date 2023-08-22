@@ -1,12 +1,12 @@
 import R from 'ramda';
-import logger from '../../utils/logger';
 import { GameController, CreateGame } from './games.model';
 import { Dependencies } from '../controllers.model';
 import { User, BoardItem } from '../../models/game';
 import { notFoundError, badRequestError } from '../../utils/errorFactory';
 import shuffleBoard from '../../utils/shuffleBoard';
 import getRandomItem from '../../utils/getRandomItem';
-import { supabase } from '../../supabase/client';
+import { getTopics } from '../../supabase/client';
+import logger from '../../utils/logger';
 
 const start = ({ store, config }: Dependencies): GameController => {
   const trimText = (text: string) => {
@@ -18,32 +18,28 @@ const start = ({ store, config }: Dependencies): GameController => {
   const removeUser = (username: string) => (user: User) => user.username !== username;
   const findUser = (username: string) => (user: User) => user.username === username;
 
-  const createGame = async ({ gameName, gameKey, topics }: CreateGame) => {
+  const createGame = async ({ gameName, gameKey, topics }: CreateGame, userToken: string) => {
     const gameExists = await store.getGameByKey(gameKey);
     if (gameExists && gameExists.key === gameKey) {
       throw badRequestError('This game was already created');
     }
-    const response: any = await supabase.from('topics')
-      .select('*, images(*)')
-      .in('id', topics);
-    const user = await supabase.auth.getUser();
-    console.log(response, user);
-    // const board = topicsInfo.map((topicInfo: any) => {
-    //   return topicInfo.images.map((image: any) => ({
-    //     id: image.id,
-    //     image: image.url,
-    //     selected: false,
-    //   }));
-    // }).flat();
-    // logger.info('Creating game');
-    // const game = {
-    //   key: trimText(gameKey),
-    //   name: trimText(gameName),
-    //   ready: false,
-    //   users: [],
-    //   board: shuffleBoard<BoardItem>(board, config.boardLength),
-    // };
-    // await store.addGame(game);
+    const topicsInfo = await getTopics(topics, userToken);
+    const board = topicsInfo.data.map((topicInfo: any) => {
+      return topicInfo.images.map((image: any) => ({
+        id: image.id,
+        image: image.url,
+        selected: false,
+      }));
+    }).flat();
+    logger.info('Creating game');
+    const game = {
+      key: trimText(gameKey),
+      name: trimText(gameName),
+      ready: false,
+      users: [],
+      board: shuffleBoard<BoardItem>(board, config.boardLength),
+    };
+    await store.addGame(game);
     return Promise.resolve();
   };
 

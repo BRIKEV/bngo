@@ -43,7 +43,7 @@ interface LeaveGame {
 }
 
 export interface GameController {
-  createGame: (payload: CreateGame) => Promise<void>;
+  createGame: (payload: CreateGame, userToken: string) => Promise<void>;
   joinGame: (key: string, username: string, gameName: string) => Promise<User>;
   playTurn: (key: string) => Promise<Turn>;
   readyToStart: (key: string, username: string) => Promise<ReadyToStart>;

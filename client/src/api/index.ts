@@ -8,14 +8,18 @@ export const joinGame = (gameKey: string, username: string, gameName: string) =>
     gameName,
   });
 };
-
-export const createGame = (gameKey: string, gameName: string, topics: number[]) => (
-  axios.post('/api/v1/games', {
+export const createGame = async (gameKey: string, gameName: string, topics: number[]) => {
+  const { data: session } = await supabase.auth.getSession();
+  return axios.post('/api/v1/games', {
     gameKey,
     gameName,
     topics,
+  }, {
+    headers: {
+      Authorization: `Bearer ${session.session?.access_token}`,
+    },
   })
-);
+};
 
 export const saveImage = async (topicId: number, image: File, userId: string) => {
   const imagePath = `${userId}/${topicId}/${image.name}`;

@@ -2,6 +2,7 @@ import express from 'express';
 import { tagError } from 'error-handler-module';
 import { Dependencies } from '../routes.model';
 import jwt from '../../utils/token';
+import { unauthorizedError } from '../../utils/errorFactory';
 
 const router = express.Router();
 
@@ -20,7 +21,8 @@ const initRouter = ({ controllers, validators, config }: Dependencies) => {
    */
   router.post('/', async (req, res, next) => {
     try {
-      await controllers.games.createGame(req.body);
+      if (!req.headers.authorization) throw unauthorizedError('Needs authorization');
+      await controllers.games.createGame(req.body, req.headers.authorization);
       const response = { success: true };
       return res.json(response);
     } catch (error) {
