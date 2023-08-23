@@ -71,3 +71,14 @@ If you are going to work in the backend we recomment to install a postgres datab
 ```
 npm run init:db
 ```
+
+## TODOS
+
+- [ ] Fix bingo logic
+- [ ] show winner
+- [ ] deploy
+- [ ] frontend improvements bngo
+- [ ] logout on finish
+- [ ] frontend improvements create game
+- [ ] Testing backend
+- [ ] testing frontend
