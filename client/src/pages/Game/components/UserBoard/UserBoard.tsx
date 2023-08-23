@@ -1,6 +1,7 @@
 import { Button, Typography } from "antd";
 import gamesStore from "../../store/game";
 import { emit } from "../../../../io";
+import { Board } from "../../../../components/Board/Board";
 
 const UserBoard = () => {
   const [userBoard] = gamesStore(state => [state.userBoard]);
@@ -19,11 +20,13 @@ const UserBoard = () => {
       <Button type="primary" onClick={leaveGame}>Leave game</Button>
       <Typography.Title level={3}>UserBoard</Typography.Title>
       <div>
-        {userBoard.map(board => (
-          <div key={board.id}>
-            <Typography.Text>{board.image}</Typography.Text>
-          </div>
-        ))}
+      <Board
+        columns={4}
+        elements={userBoard.map(item => ({
+          ...item,
+          selected: true
+        }))}
+      />
       </div>
     </div>
   );
