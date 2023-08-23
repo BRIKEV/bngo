@@ -35,7 +35,7 @@ interface Methods {
   optionSelected: (optionSelected: Selected, board: BoardItem[]) => void;
   callbackAfterSelected: () => void;
   incorrectBingo: ({ username }: Pick<Message, 'username'>) => void;
-  usernameHasBingo: ({ username }: Pick<Message, 'username'>) => void;
+  usernameHasBingo: (username: string) => void;
   usersList: (users: User[]) => void;
   userLeaves: ({ username }: Pick<Message, 'username'>) => void;
   userMessage: ({ title, message }: Pick<Message, 'title' | 'message'>) => void;
@@ -88,7 +88,7 @@ const IOeventEmitter = (methods: Methods, options: Options) => {
   });
 
   socket.on('usernameHasBingo', ({ username }) => {
-    methods.usernameHasBingo({ username });
+    methods.usernameHasBingo(username);
   });
 
   socket.on('usersList', ({ users }) => {

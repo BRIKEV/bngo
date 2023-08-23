@@ -6,8 +6,11 @@ import UserBoard from "./components/UserBoard/UserBoard";
 import MainBoard from "./components/MainBoard/MainBoard";
 import DrawPick from "./components/DrawPick/DrawPick";
 import { shallow } from "zustand/shallow";
+import { message } from "antd";
 
 const Game = () => {
+  const [messageApi, contextHolder] = message.useMessage();
+
   const methods = gamesStore((state) => ({
     setOptionSelected: state.setOptionSelected,
     setTotalBoard: state.setTotalBoard,
@@ -15,13 +18,15 @@ const Game = () => {
     setUserInfo: state.setUserInfo,
     setUsersList: state.setUsersList,
     activateAnimate: state.activateAnimate,
+    startGame: state.startGame,
+    usernameHasBingo: state.usernameHasBingo,
   }), shallow);
   console.log('Re render Game', methods);
   useEffect(() => {
     io({
       yourBoard: (_username, board) => methods.setUserBoard(board),
       userReady: methods.setUserInfo,
-      gameReady: methods.activateAnimate,
+      gameReady: methods.startGame,
       board: methods.setTotalBoard,
       optionSelected: methods.setOptionSelected,
       callbackAfterSelected: methods.activateAnimate,
@@ -30,7 +35,10 @@ const Game = () => {
         window.location.reload();
       },
       incorrectBingo: () => {
-        console.log('Show popup with no bingo');
+        messageApi.open({
+          type: 'warning',
+          content: 'No tienes bingo',
+        });
       },
       userMessage: () => {
         console.log('show mensajes');
@@ -39,9 +47,7 @@ const Game = () => {
         logout();
         window.location.reload();
       },
-      usernameHasBingo: () => {
-        console.log('Mostrar ganador');
-      },
+      usernameHasBingo: methods.usernameHasBingo,
       usersList: methods.setUsersList,
       readyToPlayAgain: () => {
         // removeSessionStorage();
@@ -59,6 +65,7 @@ const Game = () => {
       <MainBoard />
       <DrawPick />
       <UserBoard />
+      {contextHolder}
     </div>
   );
 };

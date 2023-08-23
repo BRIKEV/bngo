@@ -35,7 +35,6 @@ const start = ({ store, config }: Dependencies): GameController => {
     let shuffledBoard = shuffleBoard<BoardItem>(board, config.boardLength);
     const imageURLS = shuffledBoard.map(boardItem => boardItem.image);
     const preSignedURLS = await createPreSignedURLS(userToken, imageURLS, config.expireImages);
-    console.log(preSignedURLS);
     if (!preSignedURLS) throw internalError('Error creating images urls');
     shuffledBoard = shuffledBoard.map((boardItem, index) => ({
       ...boardItem,

@@ -1,4 +1,3 @@
-import { create } from 'zustand';
 import { BoardItem, User } from '../../../models/game';
 import { createWithEqualityFn } from 'zustand/traditional';
 import { shallow } from 'zustand/shallow';
@@ -13,6 +12,8 @@ interface UIGame {
     animate: boolean | null;
     selected: Selected;
   };
+  winner: string | null;
+  gameReady: boolean;
   users: User[];
   board: BoardItem[];
   userBoard: BoardItem[];
@@ -23,6 +24,8 @@ interface UIGame {
   setUserInfo: (username: string, ready: boolean, host?: boolean) => void;
   activateAnimate: () => void;
   setUsersList: (users: User[]) => void;
+  startGame: () => void;
+  usernameHasBingo: (username: string) => void;
 }
 
 const gamesStore = createWithEqualityFn<UIGame>((set) => ({
@@ -33,10 +36,15 @@ const gamesStore = createWithEqualityFn<UIGame>((set) => ({
       name: '',
     },
   },
+  winner: null,
+  gameReady: false,
   users: [],
   board: [],
   userBoard: [],
   user: null,
+  startGame: () => {
+    set({ gameReady: true });
+  },
   setUserBoard: (userBoard) => {
     set({ userBoard });
   },
@@ -65,6 +73,9 @@ const gamesStore = createWithEqualityFn<UIGame>((set) => ({
   },
   setUsersList(users: User[]) {
     set({ users });
+  },
+  usernameHasBingo(winner) {
+    set({ winner });
   },
 }), shallow);
 

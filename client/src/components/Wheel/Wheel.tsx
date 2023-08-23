@@ -14,10 +14,11 @@ interface Props {
 }
 
 const RouletteComponent = ({ selected, animate, images }: Props) => {
+  console.log(selected);
   return (
     <div className="roulette">
       <div className="wheel">
-        <div className="selectedImage" style={{ display: selected.name && !animate ? 'block' : 'none' }}>
+        <div className="selectedImage" style={{ display: !animate ? 'block' : 'none' }}>
           <img className="image" src={selected.image} alt={selected.name} />
         </div>
         <div className={`wheel-inner ${animate && 'animate'}`} style={{ display: animate ? 'block' : 'none' }}>
