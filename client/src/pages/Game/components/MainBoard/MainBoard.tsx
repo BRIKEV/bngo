@@ -4,6 +4,7 @@ import gamesStore from "../../store/game";
 const MainBoard = () => {
   const board = gamesStore(state => state.board);
 
+  console.log('Re render MainBoard');
   console.log(board);
   return (
     <div>
@@ -11,7 +12,7 @@ const MainBoard = () => {
       <div>
         {board.map(board => (
           <div key={board.id}>
-            {board.image}
+            <Typography.Text>{board.image}</Typography.Text>
           </div>
         ))}
       </div>

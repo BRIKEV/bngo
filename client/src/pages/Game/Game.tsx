@@ -1,10 +1,11 @@
 import { useEffect } from "react";
 import io from "../../io";
 import gamesStore from "./store/game";
-import { getInfo } from "../../persistence/access";
+import { getInfo, logout } from "../../persistence/access";
 import UserBoard from "./components/UserBoard/UserBoard";
 import MainBoard from "./components/MainBoard/MainBoard";
 import DrawPick from "./components/DrawPick/DrawPick";
+import { shallow } from "zustand/shallow";
 
 const Game = () => {
   const methods = gamesStore((state) => ({
@@ -14,7 +15,8 @@ const Game = () => {
     setUserInfo: state.setUserInfo,
     setUsersList: state.setUsersList,
     activateAnimate: state.activateAnimate,
-  }));
+  }), shallow);
+  console.log('Re render Game', methods);
   useEffect(() => {
     io({
       yourBoard: (_username, board) => methods.setUserBoard(board),
@@ -23,14 +25,20 @@ const Game = () => {
       board: methods.setTotalBoard,
       optionSelected: methods.setOptionSelected,
       callbackAfterSelected: methods.activateAnimate,
-      errorAccess: () => console.log('Logout'),
+      errorAccess: () => {
+        logout();
+        window.location.reload();
+      },
       incorrectBingo: () => {
         console.log('Show popup with no bingo');
       },
       userMessage: () => {
         console.log('show mensajes');
       },
-      userLeaves: () => console.log('User leaves'),
+      userLeaves: () => {
+        logout();
+        window.location.reload();
+      },
       usernameHasBingo: () => {
         console.log('Mostrar ganador');
       },
@@ -44,7 +52,7 @@ const Game = () => {
       ...getInfo(),
       delay: 6000,
     });
-  }, [methods]);
+  }, []);
 
   return (
     <div>

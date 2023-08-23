@@ -1,5 +1,7 @@
 import { create } from 'zustand';
 import { BoardItem, User } from '../../../models/game';
+import { createWithEqualityFn } from 'zustand/traditional';
+import { shallow } from 'zustand/shallow';
 
 interface Selected {
   image: string;
@@ -23,7 +25,7 @@ interface UIGame {
   setUsersList: (users: User[]) => void;
 }
 
-const gamesStore = create<UIGame>()((set) => ({
+const gamesStore = createWithEqualityFn<UIGame>((set) => ({
   currentResult: {
     animate: null,
     selected: {
@@ -64,6 +66,6 @@ const gamesStore = create<UIGame>()((set) => ({
   setUsersList(users: User[]) {
     set({ users });
   },
-}));
+}), shallow);
 
 export default gamesStore;

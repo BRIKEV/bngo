@@ -5,6 +5,7 @@ import RouteValidation from './Layout/RouteValidation';
 import Admin from './pages/Admin/Admin';
 import TopicDetail from './pages/TopicDetail/TopicDetail';
 import GameValidation from './Layout/GameValidation';
+import Login from './pages/Login/Login';
 
 const router = createBrowserRouter([
   {
@@ -39,7 +40,7 @@ const router = createBrowserRouter([
   },
   {
     path: '/login',
-    element: <Game />,
+    element: <Login />,
   },
 ]);
 

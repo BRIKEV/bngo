@@ -11,11 +11,16 @@ import {
 import gamesStore from '../../../../store/topics';
 import { createGame } from '../../../../api';
 
+interface FormValues {
+  key: string;
+  gameName: string;
+  topics: number[];
+}
 
 const CreateGame: React.FC = () => {
   const topicList = gamesStore((state) => state.topics);
-  const onFinish = async (values: any) => {
-    await createGame(values.password, values.gameName, values.topics);
+  const onFinish = async (values: FormValues) => {
+    await createGame(values.key, values.gameName, values.topics);
   };
   return (
     <Form
@@ -32,10 +37,10 @@ const CreateGame: React.FC = () => {
   
       <Form.Item
         label="Password"
-        name="password"
-        rules={[{ required: true, message: 'Please input your password!' }]}
+        name="key"
+        rules={[{ required: true, message: 'Please input your key!' }]}
       >
-        <Input.Password />
+        <Input />
       </Form.Item>
   
       <Form.Item name="topics" label="Elige cateogria">

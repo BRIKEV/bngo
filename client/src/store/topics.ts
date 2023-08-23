@@ -24,7 +24,7 @@ interface UIState {
   findAllTopics: () => void;
 }
 
-const gamesStore = create<UIState>()((set) => ({
+const gamesStore = create<UIState>((set) => ({
   loading: true,
   topics: [],
   findAllTopics: async () => {

@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 
 type FieldType = {
   gameName: string;
-  password: string;
+  key: string;
   username: string;
 };
 
@@ -15,7 +15,7 @@ const JoinGame: React.FC = () => {
   const navigate = useNavigate();
 
   const onFinish = async (values: FieldType) => {
-    const response = await joinGame(values.password, values.username, values.gameName);
+    const response = await joinGame(values.key, values.username, values.gameName);
     setAccess(response.data.accessKey);
     navigate('/game');
   };
@@ -38,10 +38,10 @@ const JoinGame: React.FC = () => {
   
       <Form.Item<FieldType>
         label="Password"
-        name="password"
-        rules={[{ required: true, message: 'Please input your password!' }]}
+        name="key"
+        rules={[{ required: true, message: 'Please input your key!' }]}
       >
-        <Input.Password />
+        <Input />
       </Form.Item>
 
       <Form.Item<FieldType>

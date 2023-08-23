@@ -51,7 +51,6 @@ const start = async ({ http, controllers, config }: Dependencies) => {
   });
 
   io.on('connection', socket => {
-    console.log('Connect');
     // socket.emit('userConnected', { userId: socket.id });
     let intervalIdentifier: string;
     let username: string;
