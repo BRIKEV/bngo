@@ -2,6 +2,7 @@ import { Button, Typography } from "antd";
 import gamesStore from "../../store/game";
 import { emit } from "../../../../io";
 import { Board } from "../../../../components/Board/Board";
+import styles from './UserBoard.module.css';
 
 const UserBoard = () => {
   const [userBoard, gameReady] = gamesStore(state => [state.userBoard, state.gameReady]);
@@ -21,14 +22,20 @@ const UserBoard = () => {
   };
 
   return (
-    <div>
+    <div className={styles.container}>
       {gameReady ? (
-        <Button type="primary" onClick={haveBngo}>Bngo</Button>
+        <div className={styles.buttonContainer}>
+          <Button type="primary" block onClick={haveBngo}>Bngo</Button>
+        </div>
       ): (
-        <Button type="primary" onClick={readyToPlay}>Ready to play</Button>
+        <div className={styles.buttonContainer}>
+          <Button type="primary" block onClick={readyToPlay}>Ready to play</Button>
+        </div>
       )}
-      <Button type="primary" onClick={leaveGame}>Leave game</Button>
-      <Typography.Title level={3}>UserBoard</Typography.Title>
+      <div className={styles.buttonContainer}>
+        <Button block onClick={leaveGame}>Leave game</Button>
+      </div>
+      <Typography.Title level={3}>Tu tablero</Typography.Title>
       <div>
       <Board
         columns={4}

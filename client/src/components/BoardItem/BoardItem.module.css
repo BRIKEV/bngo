@@ -1,18 +1,22 @@
 .placeholder {
   background-color: #909bbc;
-  width: 100%;
+  width: 50px;
+  min-width: 90px;
   height: 100%;
+  min-height: 80px;
   border-radius: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 3rem;
+  font-size: 1rem;
   opacity: 0.5;
 }
 
 .img {
   width: 100%;
+  min-width: 90px;
   height: 100%;
+  min-height: 80px;
   object-fit: cover;
   cursor: pointer;
   border-radius: 20px;

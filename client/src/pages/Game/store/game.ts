@@ -1,6 +1,7 @@
 import { BoardItem, User } from '../../../models/game';
 import { createWithEqualityFn } from 'zustand/traditional';
 import { shallow } from 'zustand/shallow';
+import { message } from 'antd';
 
 interface Selected {
   image: string;
@@ -26,6 +27,7 @@ interface UIGame {
   setUsersList: (users: User[]) => void;
   startGame: () => void;
   usernameHasBingo: (username: string) => void;
+  incorrectBingo: () => void;
 }
 
 const gamesStore = createWithEqualityFn<UIGame>((set) => ({
@@ -75,7 +77,12 @@ const gamesStore = createWithEqualityFn<UIGame>((set) => ({
     set({ users });
   },
   usernameHasBingo(winner) {
+    console.log('Winner bingo');
     set({ winner });
+  },
+  incorrectBingo: () => {
+    message.info('No tienes bingo');
+    console.log('Bingo incorrecto');
   },
 }), shallow);
 

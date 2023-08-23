@@ -47,7 +47,7 @@ const JoinGame: React.FC = () => {
       <Form.Item<FieldType>
         label="username"
         name="username"
-        rules={[{ required: true, message: 'Please input your username!' }]}
+        rules={[{ required: true, max: 40, message: 'Please input your username!' }]}
       >
         <Input />
       </Form.Item>

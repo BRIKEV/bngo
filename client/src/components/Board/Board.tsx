@@ -7,17 +7,13 @@ interface Props {
     image: string;
     selected: boolean;
   }[];
-  columns: number;
+  columns: 6 | 4;
 }
 
 export const Board = ({ elements, columns }: Props) => {
   return (
     <div
-      className={styles.container}
-      style={{
-        gridTemplateColumns: `repeat(${columns}, minmax(150px, 200px))`,
-        gridTemplateRows: `repeat(${columns},  minmax(150px, 200px))`
-      }}
+      className={`${styles.container} ${styles[`column-${columns}`]}`}
     >
       {elements.map(element => (
         <div key={element.id}>

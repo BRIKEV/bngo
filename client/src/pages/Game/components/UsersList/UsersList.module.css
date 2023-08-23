@@ -1,0 +1,9 @@
+.container {
+  margin-bottom: 40px;
+}
+
+.tagContainer {
+  margin: 0;
+  display: flex;
+  gap: 5px;
+}

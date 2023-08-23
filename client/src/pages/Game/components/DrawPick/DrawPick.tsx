@@ -1,31 +1,31 @@
-import { Typography } from "antd";
 import gamesStore from "../../store/game";
 import RouletteComponent from "../../../../components/Wheel/Wheel";
 import UsersList from "../UsersList/UsersList";
+import styles from './DrawPick.module.css';
 
 const DrawPick = () => {
-  const [currentResult, board] = gamesStore(state => [
+  const [currentResult, board, gameReady] = gamesStore(state => [
     state.currentResult,
     state.board,
+    state.gameReady,
   ]);
 
   console.log('Re render DrawPick');
   console.log(currentResult);
   return (
     <div>
-      <Typography.Title level={3}>DrawPick</Typography.Title>
-      <div>
-      <Typography.Title level={4}>Se muestra</Typography.Title>
-      <div className="container-roulette">
-        <RouletteComponent
-          animate={!!currentResult.animate}
-          selected={currentResult.selected}
-          images={board}
-        />
-      </div>
-      <hr />
-      <UsersList />
-      </div>
+      {gameReady && (
+        <div >
+          <RouletteComponent
+            animate={!!currentResult.animate}
+            selected={currentResult.selected}
+            images={board}
+          />
+        </div>
+      )}
+      {!gameReady && (
+        <UsersList />
+      )}
     </div>
   );
 };

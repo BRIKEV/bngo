@@ -1,16 +1,14 @@
-import { useEffect } from "react";
-import io from "../../io";
-import gamesStore from "./store/game";
-import { getInfo, logout } from "../../persistence/access";
-import UserBoard from "./components/UserBoard/UserBoard";
-import MainBoard from "./components/MainBoard/MainBoard";
-import DrawPick from "./components/DrawPick/DrawPick";
-import { shallow } from "zustand/shallow";
-import { message } from "antd";
+import { useEffect } from 'react';
+import { shallow } from 'zustand/shallow';
+import io from '../../io';
+import gamesStore from './store/game';
+import { getInfo, logout } from '../../persistence/access';
+import UserBoard from './components/UserBoard/UserBoard';
+import MainBoard from './components/MainBoard/MainBoard';
+import DrawPick from './components/DrawPick/DrawPick';
+import styles from './Game.module.css';
 
 const Game = () => {
-  const [messageApi, contextHolder] = message.useMessage();
-
   const methods = gamesStore((state) => ({
     setOptionSelected: state.setOptionSelected,
     setTotalBoard: state.setTotalBoard,
@@ -20,6 +18,7 @@ const Game = () => {
     activateAnimate: state.activateAnimate,
     startGame: state.startGame,
     usernameHasBingo: state.usernameHasBingo,
+    incorrectBingo: state.incorrectBingo,
   }), shallow);
   console.log('Re render Game', methods);
   useEffect(() => {
@@ -35,10 +34,7 @@ const Game = () => {
         window.location.reload();
       },
       incorrectBingo: () => {
-        messageApi.open({
-          type: 'warning',
-          content: 'No tienes bingo',
-        });
+        methods.incorrectBingo();
       },
       userMessage: () => {
         console.log('show mensajes');
@@ -61,11 +57,10 @@ const Game = () => {
   }, []);
 
   return (
-    <div>
+    <div className={styles.container}>
       <MainBoard />
       <DrawPick />
       <UserBoard />
-      {contextHolder}
     </div>
   );
 };
