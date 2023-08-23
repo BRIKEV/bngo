@@ -15,6 +15,7 @@ const config = {
   game: {
     userOptionsLength: 16,
     boardLength: 36,
+    expireImages: 20800,
   },
   routes: {
     tokenSecret: process.env.JWT_SECRET || 'secreto',

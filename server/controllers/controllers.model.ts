@@ -6,6 +6,7 @@ export interface Dependencies {
   config: {
     userOptionsLength: number;
     boardLength: number;
+    expireImages: number;
   };
 }
 

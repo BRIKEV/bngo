@@ -2,10 +2,10 @@ import R from 'ramda';
 import { GameController, CreateGame } from './games.model';
 import { Dependencies } from '../controllers.model';
 import { User, BoardItem } from '../../models/game';
-import { notFoundError, badRequestError } from '../../utils/errorFactory';
+import { notFoundError, badRequestError, internalError } from '../../utils/errorFactory';
 import shuffleBoard from '../../utils/shuffleBoard';
 import getRandomItem from '../../utils/getRandomItem';
-import { getTopics } from '../../supabase/client';
+import { getTopics, createPreSignedURLS } from '../../supabase/client';
 import logger from '../../utils/logger';
 
 const start = ({ store, config }: Dependencies): GameController => {
@@ -24,20 +24,29 @@ const start = ({ store, config }: Dependencies): GameController => {
       throw badRequestError('This game was already created');
     }
     const topicsInfo = await getTopics(topics, userToken);
-    const board = topicsInfo.data.map((topicInfo: any) => {
-      return topicInfo.images.map((image: any) => ({
+    const board = topicsInfo.data.map(topicInfo => {
+      return topicInfo.images.map(image => ({
         id: image.id,
         image: image.url,
         selected: false,
       }));
     }).flat();
     logger.info('Creating game');
+    let shuffledBoard = shuffleBoard<BoardItem>(board, config.boardLength);
+    const imageURLS = shuffledBoard.map(boardItem => boardItem.image);
+    const preSignedURLS = await createPreSignedURLS(userToken, imageURLS, config.expireImages);
+    console.log(preSignedURLS);
+    if (!preSignedURLS) throw internalError('Error creating images urls');
+    shuffledBoard = shuffledBoard.map((boardItem, index) => ({
+      ...boardItem,
+      image: preSignedURLS[index].signedUrl,
+    }));
     const game = {
       key: trimText(gameKey),
       name: trimText(gameName),
       ready: false,
       users: [],
-      board: shuffleBoard<BoardItem>(board, config.boardLength),
+      board: shuffledBoard,
     };
     await store.addGame(game);
     return Promise.resolve();

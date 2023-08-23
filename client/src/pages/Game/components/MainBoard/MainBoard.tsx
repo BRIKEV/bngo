@@ -1,5 +1,6 @@
 import { Typography } from "antd";
 import gamesStore from "../../store/game";
+import { Board } from "../../../../components/Board/Board";
 
 const MainBoard = () => {
   const board = gamesStore(state => state.board);
@@ -10,11 +11,7 @@ const MainBoard = () => {
     <div>
       <Typography.Title level={3}>Main board</Typography.Title>
       <div>
-        {board.map(board => (
-          <div key={board.id}>
-            <Typography.Text>{board.image}</Typography.Text>
-          </div>
-        ))}
+        <Board columns={6} elements={board} />
       </div>
     </div>
   );
