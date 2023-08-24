@@ -33,9 +33,7 @@ const Game = () => {
         logout();
         window.location.reload();
       },
-      incorrectBingo: () => {
-        methods.incorrectBingo();
-      },
+      incorrectBingo: methods.incorrectBingo,
       userMessage: () => {
         console.log('show mensajes');
       },

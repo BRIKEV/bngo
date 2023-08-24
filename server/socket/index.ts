@@ -70,7 +70,7 @@ const start = async ({ http, controllers, config }: Dependencies) => {
         const { board, ready, mainBoard, users } = userInfo;
         await socket.join(gameName);
         logger.info(`User: ${username} join to game ${gameName} to the room`);
-        io.to(gameName).emit('board', { board: mainBoard });
+        io.to(gameName).emit('board', { board: mainBoard, ready });
         io.to(gameName).emit('usersList', { users });
         // info to get the user in the game with the role
         const userInGame = users.find(gameUser => gameUser.username === username);
@@ -188,8 +188,10 @@ const start = async ({ http, controllers, config }: Dependencies) => {
     });
 
     socket.on('bingo', () => {
+      console.log('request bngo');
       controllers.games.hasBingo(gameKey, username, gameName)
         .then(async hasBingo => {
+          console.log('request bngo', hasBingo);
           if (hasBingo) {
             logger.info(`User has bingo ${username} in game ${gameName}`);
             await controllers.games.finishGame(gameKey, gameName);

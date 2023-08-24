@@ -10,14 +10,12 @@ const DrawPick = () => {
     state.gameReady,
   ]);
 
-  console.log('Re render DrawPick');
-  console.log(currentResult);
   return (
     <div>
       {gameReady && (
-        <div >
+        <div className={styles.container}>
           <RouletteComponent
-            animate={!!currentResult.animate}
+            animate={currentResult.animate === null || currentResult.animate}
             selected={currentResult.selected}
             images={board}
           />

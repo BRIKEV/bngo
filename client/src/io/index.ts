@@ -29,7 +29,7 @@ interface Message {
 interface Methods {
   errorAccess: ({ message, type }: Pick<Message, 'message' | 'type'>) => void;
   yourBoard: (username: string, board: BoardItem[]) => void;
-  board: (board: BoardItem[]) => void;
+  board: (board: BoardItem[], ready: boolean) => void;
   userReady: (username: string, ready: boolean, host?: boolean) => void;
   gameReady: () => void;
   optionSelected: (optionSelected: Selected, board: BoardItem[]) => void;
@@ -63,8 +63,8 @@ const IOeventEmitter = (methods: Methods, options: Options) => {
     methods.yourBoard(username, board);
   });
 
-  socket.on('board', ({ board }) => {
-    methods.board(board);
+  socket.on('board', ({ board, ready }) => {
+    methods.board(board, ready);
   });
 
   socket.on('userReady', ({ username, ready }) => {

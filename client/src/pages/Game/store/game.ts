@@ -20,7 +20,7 @@ interface UIGame {
   userBoard: BoardItem[];
   user: User | null;
   setUserBoard: (userBoard: BoardItem[]) => void;
-  setTotalBoard: (userBoard: BoardItem[]) => void;
+  setTotalBoard: (userBoard: BoardItem[], ready: boolean) => void;
   setOptionSelected: (selected: Selected, board: BoardItem[]) => void;
   setUserInfo: (username: string, ready: boolean, host?: boolean) => void;
   activateAnimate: () => void;
@@ -50,8 +50,8 @@ const gamesStore = createWithEqualityFn<UIGame>((set) => ({
   setUserBoard: (userBoard) => {
     set({ userBoard });
   },
-  setTotalBoard(board) {
-    set({ board });
+  setTotalBoard(board, ready) {
+    set({ board, gameReady: ready });
   },
   setOptionSelected(selected, board) {
     set({
@@ -82,7 +82,6 @@ const gamesStore = createWithEqualityFn<UIGame>((set) => ({
   },
   incorrectBingo: () => {
     message.info('No tienes bingo');
-    console.log('Bingo incorrecto');
   },
 }), shallow);
 
