@@ -205,7 +205,7 @@ const start = ({ store, config }: Dependencies): GameController => {
   };
 
   const hasBingo = async (key: string, username: string, gameName: string) => {
-    const user = await getUserInfo(key, gameName, username);
+    const user = await getUserInfo(key, username, gameName);
     const userBoard = user.board.filter(({ selected }) => selected);
     return (user.gameReady && userBoard.length === config.userOptionsLength);
   };
