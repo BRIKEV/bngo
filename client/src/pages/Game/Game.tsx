@@ -7,6 +7,7 @@ import UserBoard from './components/UserBoard/UserBoard';
 import MainBoard from './components/MainBoard/MainBoard';
 import DrawPick from './components/DrawPick/DrawPick';
 import styles from './Game.module.css';
+import WinnerModal from './components/WinnerModal/WinnerModal';
 
 const Game = () => {
   const methods = gamesStore((state) => ({
@@ -59,6 +60,7 @@ const Game = () => {
       <MainBoard />
       <DrawPick />
       <UserBoard />
+      <WinnerModal />
     </div>
   );
 };
