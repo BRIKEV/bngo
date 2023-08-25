@@ -1,5 +1,6 @@
 import { BoardItem } from "../BoardItem/BoardItem";
 import styles from './Board.module.css';
+import { sortDataBasedOnDevice } from "./utils";
 
 interface Props {
   elements: {
@@ -15,7 +16,7 @@ export const Board = ({ elements, columns }: Props) => {
     <div
       className={`${styles.container} ${styles[`column-${columns}`]}`}
     >
-      {elements.map(element => (
+      {sortDataBasedOnDevice(elements).map(element => (
         <div key={element.id}>
           <BoardItem hidden={!element.selected} url={element.image} />
         </div>

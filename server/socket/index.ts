@@ -188,7 +188,7 @@ const start = async ({ http, controllers, config }: Dependencies) => {
     });
 
     socket.on('bingo', () => {
-      console.log('request bngo');
+      console.log('request bngo', gameKey, username, gameName);
       controllers.games.hasBingo(gameKey, username, gameName)
         .then(async hasBingo => {
           console.log('request bngo', hasBingo);
