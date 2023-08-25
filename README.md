@@ -74,7 +74,7 @@ npm run init:db
 
 ## TODOS
 
-- [ ] Fix bingo logic
+- [X] Fix bingo logic
 - [ ] show winner
 - [ ] deploy
 - [ ] frontend improvements bngo
