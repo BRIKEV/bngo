@@ -5,7 +5,6 @@ import styles from './UsersList.module.css';
 const UsersList = () => {
   const users = gamesStore(state => state.users);
 
-  console.log('Re render UsersList');
   return (
     <div className={styles.container}>
       <Typography.Title level={4}>Usuarios en la partida</Typography.Title>

@@ -47,7 +47,7 @@ const start = async ({ http, controllers, config }: Dependencies) => {
   const intervals: { [key: string]: NodeJS.Timer | undefined } = {};
 
   io.on("connect_error", (err) => {
-    console.log(`connect_error due to ${err.message}`);
+    logger.error(`connect_error due to ${err.message}`);
   });
 
   io.on('connection', socket => {
@@ -188,10 +188,9 @@ const start = async ({ http, controllers, config }: Dependencies) => {
     });
 
     socket.on('bingo', () => {
-      console.log('request bngo', gameKey, username, gameName);
+      logger.info('request bngo', gameKey, username, gameName);
       controllers.games.hasBingo(gameKey, username, gameName)
         .then(async hasBingo => {
-          console.log('request bngo', hasBingo);
           if (hasBingo) {
             logger.info(`User has bingo ${username} in game ${gameName}`);
             await controllers.games.finishGame(gameKey, gameName);

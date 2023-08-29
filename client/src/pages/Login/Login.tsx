@@ -9,10 +9,9 @@ const Login = () => {
   const handleSubmit = async (values: FormValues) => {
     const email = values.email;
     try {
-      const result = await supabase.auth.signInWithOtp({
+      await supabase.auth.signInWithOtp({
         email,
       });
-      console.log(result);
     } catch (error) {
       console.error(error); 
     }

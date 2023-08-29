@@ -23,7 +23,7 @@ const config = {
   },
   socket: {
     interval: 14000,
-    endGameTimeout: 16000,
+    endGameTimeout: 40000,
     tokenSecret: process.env.JWT_SECRET || 'secreto',
     tokenOptions: { expiresIn: '2h' },
   },

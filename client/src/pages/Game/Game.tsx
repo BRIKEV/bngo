@@ -21,7 +21,7 @@ const Game = () => {
     usernameHasBingo: state.usernameHasBingo,
     incorrectBingo: state.incorrectBingo,
   }), shallow);
-  console.log('Re render Game', methods);
+
   useEffect(() => {
     io({
       yourBoard: (_username, board) => methods.setUserBoard(board),

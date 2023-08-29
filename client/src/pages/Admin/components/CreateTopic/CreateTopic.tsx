@@ -11,7 +11,6 @@ import {
 import { createTopic } from '../../../../api';
 
 const normFile = (e: UploadChangeParam) => {
-  console.log('Upload event:', e);
   if (Array.isArray(e)) {
     return e;
   }

@@ -7,8 +7,6 @@ import styles from './UserBoard.module.css';
 const UserBoard = () => {
   const [userBoard, gameReady] = gamesStore(state => [state.userBoard, state.gameReady]);
 
-  console.log('Re render UserBoard');
-  console.log(userBoard);
   const haveBngo = () => {
     emit('bingo');
   };

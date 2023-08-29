@@ -77,7 +77,6 @@ const gamesStore = createWithEqualityFn<UIGame>((set) => ({
     set({ users });
   },
   usernameHasBingo(winner) {
-    console.log('Winner bingo');
     set({ winner });
   },
   incorrectBingo: () => {
