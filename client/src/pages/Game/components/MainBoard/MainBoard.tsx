@@ -1,6 +1,6 @@
-import { Typography } from "antd";
-import gamesStore from "../../store/game";
-import { Board } from "../../../../components/Board/Board";
+import { Typography } from 'antd';
+import gamesStore from '../../store/game';
+import { Board } from '../../../../components/Board/Board';
 
 const MainBoard = () => {
   const [board] = gamesStore(state => [

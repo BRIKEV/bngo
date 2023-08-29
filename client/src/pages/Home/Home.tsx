@@ -1,6 +1,6 @@
-import { Card, Typography } from "antd";
-import JoinGame from "./components/JoinGame/JoinGame";
-import styles from './Home.module.css';
+import { Card, Typography } from 'antd';
+import JoinGame from './components/JoinGame/JoinGame';
+import styles from './Home.module.scss';
 
 const { Title } = Typography;
 

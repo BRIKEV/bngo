@@ -1,4 +1,4 @@
-import './Wheel.css';
+import './Wheel.scss';
 
 interface Props {
   selected: {

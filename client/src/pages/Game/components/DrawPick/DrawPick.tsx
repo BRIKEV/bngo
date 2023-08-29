@@ -1,7 +1,7 @@
-import gamesStore from "../../store/game";
-import RouletteComponent from "../../../../components/Wheel/Wheel";
-import UsersList from "../UsersList/UsersList";
-import styles from './DrawPick.module.css';
+import gamesStore from '../../store/game';
+import RouletteComponent from '../../../../components/Wheel/Wheel';
+import UsersList from '../UsersList/UsersList';
+import styles from './DrawPick.module.scss';
 
 const DrawPick = () => {
   const [currentResult, board, gameReady] = gamesStore(state => [

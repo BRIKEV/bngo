@@ -6,7 +6,7 @@ import { getInfo, logout } from '../../persistence/access';
 import UserBoard from './components/UserBoard/UserBoard';
 import MainBoard from './components/MainBoard/MainBoard';
 import DrawPick from './components/DrawPick/DrawPick';
-import styles from './Game.module.css';
+import styles from './Game.module.scss';
 import WinnerModal from './components/WinnerModal/WinnerModal';
 
 const Game = () => {
@@ -57,9 +57,15 @@ const Game = () => {
 
   return (
     <div className={styles.container}>
-      <MainBoard />
-      <DrawPick />
-      <UserBoard />
+      <div className={styles.board}>
+        <MainBoard />
+      </div>
+      <div className={styles.draw}>
+        <DrawPick />
+      </div>
+      <div className={styles.user}>
+        <UserBoard />
+      </div>
       <WinnerModal />
     </div>
   );

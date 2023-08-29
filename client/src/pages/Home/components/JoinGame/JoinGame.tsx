@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 import { Button, Form, Input } from 'antd';
 import { joinGame } from '../../../../api';
 import { setAccess } from '../../../../persistence/access';

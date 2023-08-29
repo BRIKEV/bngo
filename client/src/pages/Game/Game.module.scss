@@ -1,0 +1,31 @@
+@use '../../styles/responsive' as r;
+
+.container {
+  display: block;
+  margin: 20px;
+  @include r.desktop {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 70% 30%;
+    grid-template-areas: 
+      "board draw"
+      "board user";
+  }
+}
+
+.board {
+  grid-area: board;
+}
+
+.user {
+  grid-area: user;
+  max-width: 370px;
+  margin: 0 auto;
+}
+
+.draw {
+  grid-area: draw;
+  max-width: 370px;
+  margin: 0 auto;
+}

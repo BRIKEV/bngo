@@ -1,11 +1,11 @@
-import { Button, Typography } from "antd";
-import { supabase } from "../../supabase/client";
-import CreateGame from "./components/CreateGame/CreateGame";
-import CreateTopic from "./components/CreateTopic/CreateTopic";
-import ListTopics from "./components/ListTopics/ListTopics";
-import { useEffect } from "react";
-import gamesStore from "../../store/topics";
-import styles from './Admin.module.css';
+import { Button, Typography } from 'antd';
+import { supabase } from '../../supabase/client';
+import CreateGame from './components/CreateGame/CreateGame';
+import CreateTopic from './components/CreateTopic/CreateTopic';
+import ListTopics from './components/ListTopics/ListTopics';
+import { useEffect } from 'react';
+import gamesStore from '../../store/topics';
+import styles from './Admin.module.scss';
 
 const Admin = () => {
   const findAllTopics = gamesStore((state) => state.findAllTopics);

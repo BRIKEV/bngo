@@ -1,8 +1,8 @@
-import { Button, Typography } from "antd";
-import gamesStore from "../../store/game";
-import { emit } from "../../../../io";
-import { Board } from "../../../../components/Board/Board";
-import styles from './UserBoard.module.css';
+import { Button, Typography } from 'antd';
+import gamesStore from '../../store/game';
+import { emit } from '../../../../io';
+import { Board } from '../../../../components/Board/Board';
+import styles from './UserBoard.module.scss';
 
 const UserBoard = () => {
   const [userBoard, gameReady] = gamesStore(state => [state.userBoard, state.gameReady]);

@@ -1,5 +1,5 @@
 import { QuestionCircleOutlined } from '@ant-design/icons';
-import styles from './BoardItem.module.css';
+import styles from './BoardItem.module.scss';
 
 interface Props {
   hidden: boolean;

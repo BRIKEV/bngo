@@ -1,5 +1,5 @@
 import { BoardItem } from "../BoardItem/BoardItem";
-import styles from './Board.module.css';
+import styles from './Board.module.scss';
 
 interface Props {
   elements: {

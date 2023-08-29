@@ -1,9 +1,8 @@
-import { useEffect, useState } from "react";
-import { getTopic } from "../../api";
-import { Spin, Typography } from "antd";
-
-import { useParams } from "react-router-dom";
-import ImageUploader from "./components/ImagesUploader/ImageUploader";
+import { useEffect, useState } from 'react';
+import { Spin, Typography } from 'antd';
+import { useParams } from 'react-router-dom';
+import { getTopic } from '../../api';
+import ImageUploader from './components/ImagesUploader/ImageUploader';
 
 interface Topic {
   id: number;

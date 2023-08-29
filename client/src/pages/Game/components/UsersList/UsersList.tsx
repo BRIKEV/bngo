@@ -1,6 +1,6 @@
-import { List, Tag, Typography } from "antd";
-import gamesStore from "../../store/game";
-import styles from './UsersList.module.css';
+import { List, Tag, Typography } from 'antd';
+import gamesStore from '../../store/game';
+import styles from './UsersList.module.scss';
 
 const UsersList = () => {
   const users = gamesStore(state => state.users);

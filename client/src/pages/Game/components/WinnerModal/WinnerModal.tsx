@@ -1,6 +1,6 @@
-import { Button, Modal, Typography } from "antd";
-import gamesStore from "../../store/game";
-import { logout } from "../../../../persistence/access";
+import { Button, Modal, Typography } from 'antd';
+import gamesStore from '../../store/game';
+import { logout } from '../../../../persistence/access';
 
 const WinnerModal = () => {
   const winner = gamesStore(state => state.winner);
