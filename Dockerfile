@@ -13,13 +13,16 @@ RUN npm install
 # Copy the rest of the application code to /app
 COPY . .
 
-ARG GOOGLE_CLIENT_ID=you-client-id
+ARG SUPABASE_ANON_KEY=your-supabase-anon-key
+ARG SUPABASE_HOST=your-supabase-host
 
-ENV DATABASE_URL=your-databse-url
-ENV JWT_SEED=your-jwt-seed
-ENV VITE_GOOGLE_CLIENT_ID=$GOOGLE_CLIENT_ID
+ENV SUPABASE_ANON_KEY=your-databse-url
+ENV SUPABASE_HOST=your-supabase-host
+ENV JWT_SECRET=your-jwt-secret
+ENV VITE_SUPABASE_ANON_KEY=$SUPABASE_ANON_KEY
+ENV VITE_SUPABASE_HOST=$SUPABASE_HOST
 
-RUN npm run build:front && npm run server:generate && npm run build:server
+RUN npm run build:front && npm run build:server
 
 # Set the command to start the application
 CMD ["npm", "start"]

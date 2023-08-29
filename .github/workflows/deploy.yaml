@@ -1,0 +1,43 @@
+name: Deploy Google cloud run
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+
+    name: Deploy Gcloud Account
+    runs-on: ubuntu-latest
+    env:
+      IMAGE_NAME: gcr.io/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_APP_NAME }}
+    steps:
+
+    - name: Login
+      uses: google-github-actions/setup-gcloud@v0
+      with:
+        project_id: ${{ secrets.GCP_PROJECT_ID }}
+        service_account_email: ${{ secrets.GCP_EMAIL }}
+        service_account_key: ${{ secrets.GCP_CREDENTIALS }}
+
+    - name: Configure Docker
+      run: gcloud auth configure-docker --quiet
+
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Add GCP credentials
+      run: npm run credentials:generate
+      env:
+        GOOGLE_STG_CREDENTIAL: ${{ secrets.GOOGLE_STG_CREDENTIAL }}
+
+    - name: Build Docker image
+      run: docker build -t $IMAGE_NAME --build-arg "GOOGLE_CLIENT_ID=${{ secrets.VITE_GOOGLE_CLIENT_ID }}" .
+      env:
+        VITE_GOOGLE_CLIENT_ID: ${{ secrets.VITE_GOOGLE_CLIENT_ID }}
+
+    - name: Push Docker image
+      run: docker push $IMAGE_NAME
+
+    - name: Deploy Docker image
+      run: gcloud run deploy ${{ secrets.GCP_APP_NAME }} --image $IMAGE_NAME --region europe-west1 --platform managed --set-env-vars "DATABASE_URL=${{ secrets.DATABASE_URL }}" --set-env-vars "JWT_SEED=${{ secrets.JWT_SEED }}" --set-env-vars "BUCKET_STORAGE=${{ secrets.BUCKET_STORAGE }}" --set-env-vars "OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}" --set-env-vars "OPEN_AI_ORGANIZATION=${{ secrets.OPEN_AI_ORGANIZATION }}" --set-env-vars "DIRECT_URL=${{ secrets.DIRECT_URL }}" --set-env-vars "WEAVIATE_HOST=${{ secrets.WEAVIATE_HOST }}" --set-env-vars "WEAVIATE_API_KEY=${{ secrets.WEAVIATE_API_KEY }}" --set-env-vars "REDIS_URL=${{ secrets.REDIS_URL }}" --set-env-vars "NODE_ENV=production" --set-env-vars "WEAVIATE_SCHEME=https" --allow-unauthenticated
