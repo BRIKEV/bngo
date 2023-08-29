@@ -23,13 +23,12 @@ const JoinGame: React.FC = () => {
   return (
     <Form
       name="basic"
-      labelCol={{ span: 8 }}
-      wrapperCol={{ span: 16 }}
       onFinish={onFinish}
       autoComplete="off"
+      layout="vertical"
     >
       <Form.Item<FieldType>
-        label="gameName"
+        label="Game name"
         name="gameName"
         rules={[{ required: true, message: 'Please input your game!' }]}
       >
@@ -37,7 +36,7 @@ const JoinGame: React.FC = () => {
       </Form.Item>
   
       <Form.Item<FieldType>
-        label="Password"
+        label="Game password"
         name="key"
         rules={[{ required: true, message: 'Please input your key!' }]}
       >
@@ -45,7 +44,7 @@ const JoinGame: React.FC = () => {
       </Form.Item>
 
       <Form.Item<FieldType>
-        label="username"
+        label="Your username"
         name="username"
         rules={[{ required: true, max: 40, message: 'Please input your username!' }]}
       >

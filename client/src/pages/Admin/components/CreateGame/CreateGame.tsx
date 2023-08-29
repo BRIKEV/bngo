@@ -26,9 +26,10 @@ const CreateGame: React.FC = () => {
     <Form
       name="validate_other"
       onFinish={onFinish}
+      layout="vertical"
     >
       <Form.Item
-        label="gameName"
+        label="Game name"
         name="gameName"
         rules={[{ required: true, message: 'Please input your game!' }]}
       >
@@ -36,18 +37,18 @@ const CreateGame: React.FC = () => {
       </Form.Item>
   
       <Form.Item
-        label="Password"
+        label="Game password"
         name="key"
         rules={[{ required: true, message: 'Please input your key!' }]}
       >
         <Input />
       </Form.Item>
   
-      <Form.Item name="topics" label="Elige cateogria">
+      <Form.Item name="topics" label="Elige categoria">
         <Checkbox.Group>
           <Row>
             {topicList.map(topic => (
-              <Col key={topic.id} span={8}>
+              <Col key={topic.id}>
                 <Checkbox value={topic.id}>
                   {topic.name}
                 </Checkbox>

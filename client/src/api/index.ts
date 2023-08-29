@@ -23,7 +23,6 @@ export const createGame = async (gameKey: string, gameName: string, topics: numb
 
 export const saveImage = async (topicId: number, image: File, userId: string) => {
   const imagePath = `${userId}/${topicId}/${image.name}`;
-  console.log(image);
   const { data: imageUploaded } = await supabase.storage.from('topics').upload(
     imagePath,
     image,

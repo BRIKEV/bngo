@@ -34,9 +34,10 @@ const CreateTopic: React.FC = () => {
     <Form
       name="create_topic"
       onFinish={onFinish}
+      layout="vertical"
     >
       <Form.Item
-        label="topicName"
+        label="Nombre de la categoría"
         name="topicName"
         rules={[{ required: true, message: 'Please input your game!' }]}
       >

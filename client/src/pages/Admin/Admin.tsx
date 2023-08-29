@@ -5,6 +5,7 @@ import CreateTopic from "./components/CreateTopic/CreateTopic";
 import ListTopics from "./components/ListTopics/ListTopics";
 import { useEffect } from "react";
 import gamesStore from "../../store/topics";
+import styles from './Admin.module.css';
 
 const Admin = () => {
   const findAllTopics = gamesStore((state) => state.findAllTopics);
@@ -12,7 +13,7 @@ const Admin = () => {
     findAllTopics();
   }, [findAllTopics]);
   return (
-    <div>
+    <div className={styles.container}>
       <Typography.Title>Crear juego</Typography.Title>
       <CreateGame />
       <hr />
