@@ -16,14 +16,14 @@ RUN npm install
 # Copy the rest of the application code to /app
 COPY . .
 
-ARG SUPABASE_ANON_KEY=your-supabase-anon-key
-ARG SUPABASE_HOST=your-supabase-host
+ARG VITE_SUPABASE_ANON_KEY=your-supabase-anon-key
+ARG VITE_SUPABASE_HOST=your-supabase-host
 
 ENV SUPABASE_ANON_KEY=your-databse-url
 ENV SUPABASE_HOST=your-supabase-host
 ENV JWT_SECRET=your-jwt-secret
-ENV VITE_SUPABASE_ANON_KEY=$SUPABASE_ANON_KEY
-ENV VITE_SUPABASE_HOST=$SUPABASE_HOST
+ENV VITE_SUPABASE_ANON_KEY=$VITE_SUPABASE_ANON_KEY
+ENV VITE_SUPABASE_HOST=$VITE_SUPABASE_HOST
 
 RUN npm run build:front && npm run build:server
 
