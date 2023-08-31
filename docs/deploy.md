@@ -13,6 +13,10 @@ gcloud projects add-iam-policy-binding brikev \
   --member=serviceAccount:bngo-ci@brikev.iam.gserviceaccount.com \
   --role=roles/run.admin
 
+gcloud projects add-iam-policy-binding brikev \
+  --member=serviceAccount:bngo-ci@brikev.iam.gserviceaccount.com \
+  --role=roles/storage.admin
+
 gcloud iam service-accounts keys create key.json \
     --iam-account bngo-ci@brikev.iam.gserviceaccount.com
 ```
