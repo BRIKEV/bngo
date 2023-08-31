@@ -27,10 +27,10 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Build Docker image
-      run: docker build -t $IMAGE_NAME --build-arg "SUPABASE_ANON_KEY=${{ secrets.SUPABASE_ANON_KEY }}" --build-arg "SUPABASE_HOST=${{ secrets.SUPABASE_HOST }}" .
+      run: docker build -t $IMAGE_NAME --build-arg "VITE_SUPABASE_ANON_KEY=${{ secrets.SUPABASE_ANON_KEY }}" --build-arg "VITE_SUPABASE_HOST=${{ secrets.SUPABASE_HOST }}" .
       env:
-        VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
-        VITE_SUPABASE_HOST: ${{ secrets.VITE_SUPABASE_HOST }}
+        VITE_SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+        VITE_SUPABASE_HOST: ${{ secrets.SUPABASE_HOST }}
 
     - name: Push Docker image
       run: docker push $IMAGE_NAME
