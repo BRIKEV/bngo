@@ -32,12 +32,13 @@ jobs:
         GOOGLE_STG_CREDENTIAL: ${{ secrets.GOOGLE_STG_CREDENTIAL }}
 
     - name: Build Docker image
-      run: docker build -t $IMAGE_NAME --build-arg "GOOGLE_CLIENT_ID=${{ secrets.VITE_GOOGLE_CLIENT_ID }}" .
+      run: docker build -t $IMAGE_NAME --build-arg "SUPABASE_ANON_KEY=${{ secrets.SUPABASE_ANON_KEY }}" --build-arg "SUPABASE_HOST=${{ secrets.SUPABASE_HOST }}" .
       env:
-        VITE_GOOGLE_CLIENT_ID: ${{ secrets.VITE_GOOGLE_CLIENT_ID }}
+        VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
+        VITE_SUPABASE_HOST: ${{ secrets.VITE_SUPABASE_HOST }}
 
     - name: Push Docker image
       run: docker push $IMAGE_NAME
 
     - name: Deploy Docker image
-      run: gcloud run deploy ${{ secrets.GCP_APP_NAME }} --image $IMAGE_NAME --region europe-west1 --platform managed --set-env-vars "DATABASE_URL=${{ secrets.DATABASE_URL }}" --set-env-vars "JWT_SEED=${{ secrets.JWT_SEED }}" --set-env-vars "BUCKET_STORAGE=${{ secrets.BUCKET_STORAGE }}" --set-env-vars "OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}" --set-env-vars "OPEN_AI_ORGANIZATION=${{ secrets.OPEN_AI_ORGANIZATION }}" --set-env-vars "DIRECT_URL=${{ secrets.DIRECT_URL }}" --set-env-vars "WEAVIATE_HOST=${{ secrets.WEAVIATE_HOST }}" --set-env-vars "WEAVIATE_API_KEY=${{ secrets.WEAVIATE_API_KEY }}" --set-env-vars "REDIS_URL=${{ secrets.REDIS_URL }}" --set-env-vars "NODE_ENV=production" --set-env-vars "WEAVIATE_SCHEME=https" --allow-unauthenticated
+      run: gcloud run deploy ${{ secrets.GCP_APP_NAME }} --image $IMAGE_NAME --region europe-west1 --platform managed --set-env-vars "JWT_SECRET=${{ secrets.JWT_SECRET }}" --set-env-vars "SUPABASE_ANON_KEY=${{ secrets.SUPABASE_ANON_KEY }}" --set-env-vars "SUPABASE_HOST=${{ secrets.SUPABASE_HOST }}" --set-env-vars "REDIS_URL=${{ secrets.REDIS_URL }}" --set-env-vars "NODE_ENV=production" --allow-unauthenticated

@@ -74,11 +74,11 @@ npm run init:db
 
 ## TODOS
 
-- [X] Fix bingo logic
-- [ ] show winner
+- [x] Fix bingo logic
+- [x] show winner
 - [ ] deploy
-- [ ] frontend improvements bngo
-- [ ] logout on finish
-- [ ] frontend improvements create game
+- [x] frontend improvements bngo
+- [x] logout on finish
+- [x] frontend improvements create game
 - [ ] Testing backend
 - [ ] testing frontend
