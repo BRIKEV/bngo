@@ -26,11 +26,6 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: Add GCP credentials
-      run: npm run credentials:generate
-      env:
-        GOOGLE_STG_CREDENTIAL: ${{ secrets.GOOGLE_STG_CREDENTIAL }}
-
     - name: Build Docker image
       run: docker build -t $IMAGE_NAME --build-arg "SUPABASE_ANON_KEY=${{ secrets.SUPABASE_ANON_KEY }}" --build-arg "SUPABASE_HOST=${{ secrets.SUPABASE_HOST }}" .
       env:
