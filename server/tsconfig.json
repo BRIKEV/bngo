@@ -19,8 +19,8 @@
     "baseUrl": ".",
     "paths": {},
     "outDir": "../dist",
-    "types": ["node", "jest"]
+    "types": ["node"]
   },
-  "exclude": ["node_modules", "tmp", "**/*.spec.ts"],
-  "include": ["**/*.ts", "tests/api.spec.js", "tests/api/recipes/delete-recipe.spects"]
+  "exclude": ["node_modules", "tmp"],
+  "include": ["**/*.ts"]
 }
