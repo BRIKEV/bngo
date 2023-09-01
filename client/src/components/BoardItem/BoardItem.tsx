@@ -1,4 +1,5 @@
-import { QuestionCircleOutlined } from '@ant-design/icons';
+import { useState } from 'react';
+import { QuestionCircleOutlined, CheckCircleTwoTone } from '@ant-design/icons';
 import styles from './BoardItem.module.scss';
 
 interface Props {
@@ -7,6 +8,7 @@ interface Props {
 }
 
 export const BoardItem = ({ hidden, url }: Props) => {
+  const [clicked, setClicked] = useState(false);
   if (hidden) {
     return (
       <div className={styles.placeholder}>
@@ -15,9 +17,19 @@ export const BoardItem = ({ hidden, url }: Props) => {
     );
   }
   return (
-    <img
-      className={styles.img}
-      src={url}
-    />
+    <div
+      className={styles.container}
+      role="button"
+      tabIndex={0}
+      onClick={() => setClicked(!clicked)}
+    >
+      <div className={`${styles.marker} ${!clicked ? styles.hide : ''}`}>
+        <CheckCircleTwoTone twoToneColor="#1a8641" />
+      </div>
+      <img
+        className={styles.img}
+        src={url}
+      />
+    </div>
   )
 };

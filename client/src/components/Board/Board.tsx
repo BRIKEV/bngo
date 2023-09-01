@@ -16,9 +16,11 @@ export const Board = ({ elements, columns }: Props) => {
       className={`${styles.container} ${styles[`column-${columns}`]}`}
     >
       {elements.map(element => (
-        <div key={element.id}>
-          <BoardItem hidden={!element.selected} url={element.image} />
-        </div>
+          <BoardItem
+            key={element.id}
+            hidden={!element.selected}
+            url={element.image}
+          />
       ))}
     </div>
   );
