@@ -5,9 +5,10 @@ import styles from './BoardItem.module.scss';
 interface Props {
   hidden: boolean;
   url: string;
+  selectable: boolean;
 }
 
-export const BoardItem = ({ hidden, url }: Props) => {
+export const BoardItem = ({ hidden, url, selectable }: Props) => {
   const [clicked, setClicked] = useState(false);
   if (hidden) {
     return (
@@ -21,7 +22,9 @@ export const BoardItem = ({ hidden, url }: Props) => {
       className={styles.container}
       role="button"
       tabIndex={0}
-      onClick={() => setClicked(!clicked)}
+      onClick={() => {
+        if (selectable) setClicked(!clicked);
+      }}
     >
       <div className={`${styles.marker} ${!clicked ? styles.hide : ''}`}>
         <CheckCircleTwoTone twoToneColor="#1a8641" />

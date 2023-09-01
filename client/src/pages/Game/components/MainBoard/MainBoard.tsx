@@ -14,6 +14,7 @@ const MainBoard = () => {
       <Typography.Title level={3}>Main board</Typography.Title>
       <div>
         <Board
+          selectable={false}
           columns={6}
           elements={isMobileDevice() && currentResults.length > 0 ? currentResults: board}
         />

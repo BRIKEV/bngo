@@ -8,9 +8,10 @@ interface Props {
     selected: boolean;
   }[];
   columns: 6 | 4;
+  selectable: boolean;
 }
 
-export const Board = ({ elements, columns }: Props) => {
+export const Board = ({ elements, columns, selectable }: Props) => {
   return (
     <div
       className={`${styles.container} ${styles[`column-${columns}`]}`}
@@ -20,6 +21,7 @@ export const Board = ({ elements, columns }: Props) => {
             key={element.id}
             hidden={!element.selected}
             url={element.image}
+            selectable={selectable}
           />
       ))}
     </div>

@@ -36,6 +36,7 @@ const UserBoard = () => {
       <Typography.Title level={3}>Tu tablero</Typography.Title>
       <div>
       <Board
+        selectable
         columns={4}
         elements={userBoard.map(item => ({
           ...item,
