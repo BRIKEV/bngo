@@ -44,7 +44,7 @@ interface Methods {
 
 const IOeventEmitter = (methods: Methods, options: Options) => {
   if (!socket) {
-    socket = io('http://localhost:4000/', {
+    socket = io(import.meta.env.PROD ? '/' : 'http://localhost:4000/', {
       query: {
         accessKey: options.accessKey,
       },
