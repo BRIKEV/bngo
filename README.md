@@ -76,9 +76,10 @@ npm run init:db
 
 - [x] Fix bingo logic
 - [x] show winner
-- [ ] deploy
+- [X] deploy
 - [x] frontend improvements bngo
 - [x] logout on finish
 - [x] frontend improvements create game
+- [ ] Local supabase
 - [ ] Testing backend
 - [ ] testing frontend

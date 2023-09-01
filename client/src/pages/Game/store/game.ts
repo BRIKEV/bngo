@@ -2,6 +2,7 @@ import { BoardItem, User } from '../../../models/game';
 import { createWithEqualityFn } from 'zustand/traditional';
 import { shallow } from 'zustand/shallow';
 import { message } from 'antd';
+import { removeDuplicateObjects } from './utils';
 
 interface Selected {
   image: string;
@@ -17,6 +18,7 @@ interface UIGame {
   gameReady: boolean;
   users: User[];
   board: BoardItem[];
+  currentResults: BoardItem[];
   userBoard: BoardItem[];
   user: User | null;
   setUserBoard: (userBoard: BoardItem[]) => void;
@@ -42,6 +44,7 @@ const gamesStore = createWithEqualityFn<UIGame>((set) => ({
   gameReady: false,
   users: [],
   board: [],
+  currentResults: [],
   userBoard: [],
   user: null,
   startGame: () => {
@@ -54,12 +57,21 @@ const gamesStore = createWithEqualityFn<UIGame>((set) => ({
     set({ board, gameReady: ready });
   },
   setOptionSelected(selected, board) {
-    set({
-      board,
-      currentResult: {
-        selected,
-        animate: false,
-      },
+    set(state => {
+      const boardItem = board.find(item => item.image === selected.image) as BoardItem;
+      const newResult = [{
+        id: boardItem.id,
+        image: boardItem.image,
+        selected: true,
+      }, ...state.currentResults];
+      return {
+        board,
+        currentResults: removeDuplicateObjects(newResult),
+        currentResult: {
+          selected,
+          animate: false,
+        },
+      };
     });
   },
   setUserInfo(username: string, ready: boolean, host?: boolean) {

@@ -1,10 +1,12 @@
 import { Typography } from 'antd';
 import gamesStore from '../../store/game';
 import { Board } from '../../../../components/Board/Board';
+import { isMobileDevice } from '../../store/utils';
 
 const MainBoard = () => {
-  const [board] = gamesStore(state => [
+  const [board, currentResults] = gamesStore(state => [
     state.board,
+    state.currentResults,
   ]);
 
   return (
@@ -13,7 +15,7 @@ const MainBoard = () => {
       <div>
         <Board
           columns={6}
-          elements={board}
+          elements={isMobileDevice() && currentResults.length > 0 ? currentResults: board}
         />
       </div>
     </div>
