@@ -133,7 +133,7 @@ const start = async ({ http, controllers, config }: Dependencies) => {
           draw(io, gameName, gameKey, () => { // finish draw cb
             logger.info('Game over all images were displayed');
             // TODO: Separate in one function
-            clearInterval(intervals[intervalIdentifier]);
+            clearInterval(intervals[intervalIdentifier] as NodeJS.Timeout);
             intervals[intervalIdentifier] = undefined;
             setTimeout(async () => {
               await controllers.games.finishGame(gameKey, gameName);
@@ -196,7 +196,7 @@ const start = async ({ http, controllers, config }: Dependencies) => {
             await controllers.games.finishGame(gameKey, gameName);
             io.to(gameName).emit('usernameHasBingo', { username });
             // TODO: Separate in one function
-            clearInterval(intervals[intervalIdentifier]);
+            clearInterval(intervals[intervalIdentifier] as NodeJS.Timeout);
             intervals[intervalIdentifier] = undefined;
           } else {
             io.to(socket.id).emit('incorrectBingo', { username });

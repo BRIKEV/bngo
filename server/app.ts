@@ -55,6 +55,7 @@ const serverApp = async () => {
   return {
     app,
     socket,
+    store,
   };
 };
 

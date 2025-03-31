@@ -1,12 +1,26 @@
 import axios from 'axios';
 import config from '../config';
 import { internalError } from '../utils/errorFactory';
+import { path } from 'ramda';
 
 interface SignedURLS {
   error: string;
   path: string;
   signedURL: string;
 }
+
+const mockedSignedURLS = [
+  {
+    error: null,
+    path: 'path/to/image1.jpg',
+    signedURL: 'https://example.com/signed-url1',
+  },
+  {
+    error: null,
+    path: 'path/to/image2.jpg',
+    signedURL: 'https://example.com/signed-url2',
+  },
+]; 
 
 export const createPreSignedURLS = async (userToken: string, paths: string[], expiresIn = 60) => {
   const { data } = await axios.post<SignedURLS[]>(`${config.supabase.host}/storage/v1/object/sign/topics`, {
@@ -42,8 +56,36 @@ interface Topic {
   }[]
 }
 
-export const getTopics = (topics: number[], userToken: string) => {
-  return axios.get<Topic[]>(`${config.supabase.host}/rest/v1/topics`, {
+const mockedTopics = [
+  {
+    id: 1,
+    created_at: '2023-10-01T00:00:00Z',
+    updated_at: '2023-10-01T00:00:00Z',
+    name: 'Topic 1',
+    user_id: 'user-1',
+    images: [
+      {
+        id: 1,
+        created_at: '2023-10-01T00:00:00Z',
+        updated_at: '2023-10-01T00:00:00Z',
+        url: 'https://example.com/image1.jpg',
+        topic_id: 1,
+        storage_id: 'storage-1',
+      },
+      {
+        id: 2,
+        created_at: '2023-10-01T00:00:00Z',
+        updated_at: '2023-10-01T00:00:00Z',
+        url: 'https://example.com/image2.jpg',
+        topic_id: 1,
+        storage_id: 'storage-2',
+      },
+    ],
+  },
+];
+
+export const getTopics = async (topics: number[], userToken: string): Promise<Topic[]> => {
+  const { data } = await axios.get<Topic[]>(`${config.supabase.host}/rest/v1/topics`, {
     params: {
       select: '*,images(*)',
       id: `in.(${topics.join(', ')})`,
@@ -52,5 +94,6 @@ export const getTopics = (topics: number[], userToken: string) => {
       apikey: config.supabase.anonKey,
       Authorization: userToken,
     },
-  })
+  });
+  return data;
 };

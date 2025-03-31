@@ -14,7 +14,7 @@ const initRouter = ({ controllers, validators, config }: Dependencies) => {
    * @summary create a game
    * @tags Games
    * @param {CreateGameRequest} request.body.required - join game info
-   * @return 200 - Join game response
+   * @return 201 - Join game response
    * @return 400 - Bad request
    * @return 401 - Unauthorized
    * @return 500 - Internal server error
@@ -22,11 +22,15 @@ const initRouter = ({ controllers, validators, config }: Dependencies) => {
   router.post('/', async (req, res, next) => {
     try {
       if (!req.headers.authorization) throw unauthorizedError('Needs authorization');
-      await controllers.games.createGame(req.body, req.headers.authorization);
+      await controllers.games.createGame({
+        gameName: req.body.gameName,
+        gameKey: req.body.gameKey,
+        topics: req.body.topics,
+      }, req.headers.authorization);
       const response = { success: true };
-      return res.json(response);
+      res.status(201).json(response);
     } catch (error) {
-      return next(tagError(error));
+      next(tagError(error));
     }
   });
 
@@ -51,9 +55,9 @@ const initRouter = ({ controllers, validators, config }: Dependencies) => {
         }),
       };
       validateResponse(response, req);
-      return res.json(response);
+      res.json(response);
     } catch (error) {
-      return next(tagError(error));
+      next(tagError(error));
     }
   });
 

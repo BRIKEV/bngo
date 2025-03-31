@@ -34,9 +34,5 @@
   "bugs": {
     "url": "https://github.com/BRIKEV/bngo-v2/issues"
   },
-  "homepage": "https://github.com/BRIKEV/bngo-v2#readme",
-  "devDependencies": {
-    "sass": "^1.66.1",
-    "supabase": "^1.88.0"
-  }
+  "homepage": "https://github.com/BRIKEV/bngo-v2#readme"
 }

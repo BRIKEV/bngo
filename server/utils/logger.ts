@@ -32,4 +32,11 @@ logger.add(
   })
 );
 
+if (process.env.NODE_ENV === 'test') {
+  // disable logger in test environment
+  logger.transports.forEach((t) => {
+    t.silent = true;
+  });
+}
+
 export default logger;

@@ -24,14 +24,14 @@ const start = ({ store, config }: Dependencies): GameController => {
       throw badRequestError('This game was already created');
     }
     const topicsInfo = await getTopics(topics, userToken);
-    const board = topicsInfo.data.map(topicInfo => {
+    const board = topicsInfo.map(topicInfo => {
       return topicInfo.images.map(image => ({
         id: image.id,
         image: image.url,
         selected: false,
       }));
     }).flat();
-    logger.info('Creating game');
+    logger.info('Creating game');    
     let shuffledBoard = shuffleBoard<BoardItem>(board, config.boardLength);
     const imageURLS = shuffledBoard.map(boardItem => boardItem.image);
     const preSignedURLS = await createPreSignedURLS(userToken, imageURLS, config.expireImages);
@@ -48,7 +48,6 @@ const start = ({ store, config }: Dependencies): GameController => {
       board: shuffledBoard,
     };
     await store.addGame(game);
-    return Promise.resolve();
   };
 
   const getGameByKey = async (key: string) => {
