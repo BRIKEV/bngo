@@ -1,0 +1,13 @@
+.container {
+  margin-bottom: 20px;
+  .list {
+    max-height: 251px;
+    overflow-x: scroll;
+  }
+  
+  .tagContainer {
+    margin: 0;
+    display: flex;
+    gap: 5px;
+  }
+}
