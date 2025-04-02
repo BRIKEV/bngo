@@ -15,7 +15,7 @@
     "build:front": "npm run build -w client",
     "build:server": "npm run build -w server",
     "init:db": "npm run init:db -w server",
-    "test": "jest",
+    "test": "vitest",
     "test:server": "npm run test:ci -w server",
     "start": "NODE_ENV=production node dist/server.js"
   },
@@ -25,7 +25,7 @@
   },
   "keywords": [
     "bngo",
-    "jest",
+    "vitest",
     "react",
     "supabase"
   ],

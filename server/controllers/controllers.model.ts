@@ -8,6 +8,9 @@ export interface Dependencies {
     boardLength: number;
     expireImages: number;
   };
+  imageService: {
+    createPreSignedURLS: (userToken: string, imageURLS: string[], expireImages: number) => Promise<{ signedUrl: string }[]>;
+  };
 }
 
 export interface Controllers {
